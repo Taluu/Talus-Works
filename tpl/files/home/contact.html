@@ -1,0 +1,43 @@
+<include tpl="head.html" />
+				<h1>Contact du Webmaster de Talus' Works</h1>
+				<p>Un soucis avec le site ? Une demande d'autographe (on peut espérer... ^^) ? Ou juste une demande personnelle à me faire ? Hésitez pas, ce formulaire est là pour vous ;)</p>
+				<p>Veuillez juste à noter que si c'est un problème résoluble par l'intermédiaire des forums (bugs, suggestion, problèmes, ...), passez directement par le forum.</p>
+				<p class="centre grand rouge">Notez que Tous les champs sont obligatoires !</p>
+				<if condition="{$ERR_MSG} != ''">
+					<p class="centre rouge gras">{ERR_MSG}</p>
+				</if>
+				
+				<form action="" method="post">
+					<fieldset class="contact">
+						<legend>Contacter le Webmaster</legend>
+						<p>
+							<label for="nickname" class="label_cote">Votre Nom :</label> 
+							<input type="text" name="nickname" id="nickname" size="35" value="{NICKNAME}" />
+						</p>
+						
+						<p>
+							<label for="email" class="label_cote">Votre Email :</label> 
+							<input type="text" name="email" id="email" size="35" value="{EMAIL}" />
+						</p>
+						
+						<p>
+							<label for="sujet" class="label_cote">Sujet :</label>
+							<input type="text" name="sujet" id="sujet" size="53" />
+						</p>
+							
+						<p>
+							<label for="message" class="label_cote">Votre Message :</label>
+							<textarea rows="25" cols="41" id="message" name="message">{MESSAGE}</textarea>
+						</p>
+						<p class="captcha">
+							<label for="captcha">
+								Résolvez cette simple opération (chiffres) :<br />
+								Combien font {CAPTCHA['a']} {CAPTCHA['operateur']} {CAPTCHA['b']} ?
+							</label> 
+							<input type="text" name="captcha" id="captcha" size="10" />
+						</p>
+						
+						<p class="send"><input type="submit" name="send" value="Envoi" /></p>
+					</fieldset>
+				</form>
+<include tpl="foot.html" />

@@ -1,0 +1,15 @@
+<fieldset class="eip">
+    <form action="edit-topic-{PID}.html" method="post" name="ajax_eip_{PID}">
+        <input type="hidden" name="from_fast_edition" value="true" />
+        <input type="{TYPE}" name="t_title" value="{TITLE}" class="eip_input" />
+        <input type="{TYPE}" name="t_description" value="{DESCRIPTION}" class="eip_input" />
+        
+        <textarea class="eip_edit" cols="40" rows="10" name="edit">{CONTENT}</textarea><br />
+        
+        <div class="eip_sender">
+            <input type="submit" name="send" value="Editer" onclick="submit_eip({PID}); return false;" /> 
+            <input type="submit" value="Edition Avancée" name="send" /> 
+            <input type="button" value="Annuler" onclick="cancel_eip({PID});"/>
+        </div>
+    </form>
+</fieldset>

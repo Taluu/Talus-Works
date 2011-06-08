@@ -1,0 +1,137 @@
+<include tpl="head.html" />
+                <h1>{FORUM_TITLE}</h1>
+                <if condition="{$FORUM_DESCRIPTION}"><div class="forum_description">{FORUM_DESCRIPTION}</div></if>
+
+                <if condition="{$SUB_FORUMS}">
+                    <table class="list_forums">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="lbl_cat">Nom du Forum</th>
+                                <th class="lbl_nbr">Sujets</th>
+                                <th class="lbl_nbr">Messages</th>
+                                <th class="lbl_last">Dernier Message</th>
+                            </tr>
+                        </thead>
+                        
+                        <tfoot>
+                            <tr>
+                                <th colspan="2" class="lbl_cat">Nom du forum</th>
+                                <th class="lbl_nbr">Sujets</th>
+                                <th class="lbl_nbr">Messages</th>
+                                <th class="lbl_last">Dernier Message</th>
+                            </tr>
+                        </tfoot>
+                        
+                        <tbody>								
+                            <block name="forums">
+                                <tr class="forums">
+                                    <td class="flag_read">
+                                        <if condition="!{$forums.IS_READ}"><a href="markread-forums-{forums.ID}.html"></if>
+                                        <img src="./images/icones/forum_{forums.ICON_PREFIX}read.png" <if condition="{$forums.IS_READ}">alt="Vous avez lu tous les sujets de ce forum" title="Vous avez lu tous les sujets de ce forum"<else />alt="Vous avez des sujets non lus dans ce forum" title="Vous avez des sujets non lus dans ce forum"</if> />
+                                        <if condition="!{$forums.IS_READ}"></a></if>								
+                                    </td>
+                                    <td class="forums_name">
+                                        <a href="{forums.URL}">{forums.NAME}</a>
+                                        <if condition="{$forums.DESCRIPTION}"><br />{forums.DESCRIPTION}</if>
+                                        <block name="subs" parent="forums">
+                                            <if condition="{$subs.FIRST}"><br /><img src="./images/icones/list_sub.png" /></if>
+                                            <a href="{subs.URL}">{subs.NAME}</a><if condition="!{$subs.LAST}">, </if>
+                                        </block>
+                                    </td>
+                                    <td class="stats">
+                                        {forums.TOPICS}
+                                    </td>
+                                    <td class="stats">
+                                        {forums.POSTS}
+                                    </td>
+                                    <td class="last_answer">
+                                        {forums.LAST_TOPIC}
+                                        {forums.LAST_DATE}
+                                        {forums.LAST_USER}
+                                    </td>
+                                </tr>
+                            </block>
+                        </tbody>
+                    </table>
+                </if>
+
+                <if condition="{$SHOW_TOPICS}">
+                    <table class="topics_info">
+                        <tbody>
+                            <tr>
+                                <td class="post_new_topics"><if condition="{$FORUM_OPENED}"><a href="new-topic-{FORUM_ID}.html">Nouveau Sujet</a><else />Forum Fermé</if></td>
+                                <td class="right">
+                                    <a href="{URL_MARKREAD}" class="markread">Marquer ce forum comme lu</a>
+
+                                    <if condition="{$USE_PAGINATION}">
+                                        <br /><div class="pagination">
+                                        <block name="pagination"><span class="page">{pagination.PAGE}</span></block>
+                                        </div>
+                                    </if>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table class="list_topics">
+                        <thead>
+                            <tr>
+                            <th colspan="3" class="lbl_cat">Nom du Sujet</th>
+                            <!--<th class="lbl_nbr">Pages</th>//-->
+                            <th class="lbl_nbr">Lectures</th>
+                            <th class="lbl_nbr">Réponses</th>
+                            <th class="lbl_last">Dernière Réponse</th>
+                            </tr>
+                        </thead>
+
+                        <tfoot>
+                            <tr>
+                            <th colspan="3" class="lbl_cat">Nom du Sujet</th>
+                            <!--<th class="lbl_nbr">Pages</th>//-->
+                            <th class="lbl_nbr">Lectures</th>
+                            <th class="lbl_nbr">Réponses</th>
+                            <th class="lbl_last">Dernière Réponse</th>
+                            </tr>
+                        </tfoot>
+
+                        <tbody>
+                            <block name="topics">
+                                <tr class="topics">
+                                    <td class="flag_read"><img src="./images/icones/topic_{topics.ICON_PREFIX}read.png" <if condition="{$topics.IS_READ}">alt="Vous avez lu ce sujet" title="Vous avez lu ce sujet"<else />alt="Vous n'avez pas lu ce sujet" title="Vous n'avez pas lu ce sujet"</if> /></td>
+                                    <td class="flag_special">
+                                        <if condition="{$topics.IS_POSTIT}"><img src="./images/icones/topic_postit.png" alt="Post-it" title="Ce sujet est un post-it" /></if>
+                                        <if condition="{$topics.IS_SOLVED}"><img src="./images/icones/topic_solved.png" alt="Résolu" title="Ce sujet est résolu" /></if>
+                                        <if condition="{$topics.IS_LOCKED}"><img src="./images/icones/topic_locked.png" alt="Fermé" title="Ce sujet est fermé" /></if>
+                                    </td>
+                                    <td class="topic_name">
+                                        {topics.LAST_READ}<if condition="{$topics.IS_POSTIT}"><strong>[Post-It]</strong> </if><a href="{topics.U_TITLE}" title="Créé {topics.FIRST_TIME}, par {topics.FIRST_USER|protect}">{topics.TITLE}</a> [Pages : <block name="pagination" parent="topics">{pagination.PAGE}<if cond="!{$pagination.LAST}">,</if></block>]
+                                        <if condition="{$topics.DESCRIPTION}"><br /><span class="topic_description">{topics.DESCRIPTION}</span></if>
+                                    </td>
+                                    <td class="stats">{topics.VIEWS}</td>
+                                    <td class="stats">{topics.REPLIES}</td>
+                                    <td class="last_answer">
+                                        {topics.LAST_POST}
+                                        {topics.LAST_USER}
+                                    </td>
+                                </tr>
+                            <blockelse />
+                                <tr class="topics">
+                                    <td colspan="6" class="no_topics">Il n'y a pas de sujets pour le moment dans ce forum<if condition="{$FORUM_OPENED}"> ; Vous pouvez en créer un si vous le désirez !<else />...</if></td>
+                                </tr>
+                            </block>
+                        </tbody>
+                    </table>
+                </if>
+
+                <table class="topics_info">
+                    <tbody>
+                        <tr>
+                            <td class="post_new_topics"><if condition="{$FORUM_OPENED} && {$SHOW_TOPICS}"><a href="new-topic-{FORUM_ID}.html">Nouveau Sujet</a><else />Forum Fermé</if></td>
+                            <td class="right">
+                                <a href="{URL_MARKREAD}" class="markread">Marquer ce forum comme lu</a>
+                                <if condition="{$USE_PAGINATION}"><br /><div class="pagination"><block name="pagination"><span class="page">{pagination.PAGE}</span></block></div></if>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+<include tpl="foot.html" />

@@ -1,0 +1,153 @@
+<include tpl="head.html" />
+<div id="infos_topic">
+    <h1>{TOPIC_TITLE}</h1>
+    <if condition="{$TOPIC_DESCRIPTION}"><div class="forum_description">{TOPIC_DESCRIPTION}</div></if>
+</div>
+
+<if condition="{$TOPIC_SOLVED}">
+    <div class="topic_solved">
+        <img src="./images/icones/topic_solved.png" alt="Résolu" />
+        Ce sujet est considéré comme "Résolu".
+    </div>
+</if>
+
+<include tpl="forums/topics_info.html" />
+
+<table class="list_messages">
+    <tbody>
+        <block name="posts">
+            <tr class="post_date" id="p{posts.ID}">
+                <td colspan="2">
+                    <span class="actions">
+                        <if cond="{$IS_LOGGED}">
+                            <img src="./images/icones/abuse.gif" alt="Abus" title="Reporter un abus" />
+                            <if condition="{$IS_FORUM_MODO} || {$posts.IS_AUTHOR}">
+                                <a href="edit-topic-{posts.ID}.html">
+                                    <img src="./images/icones/edit.gif" alt="Editer" title="Editer ce post" />
+                                </a>
+                            </if>
+                            <if condition="{$IS_FORUM_MODO} && !{$posts.FIRST}">
+                                <a href="moderation-delete-{posts.ID}.html" onclick="return confirm('Êtes vous sûr de supprimer ce message ?');">
+                                    <img src="./images/icones/delete.gif" alt="Supprimer" title="Supprimer ce post" />
+                                </a>
+                            </if>
+                            <a href="reply-topic-{TOPIC_ID}-{posts.ID}.html" onclick="quote({posts.ID}, 'reply'); return false;">
+                                <img src="./images/icones/quote_off.gif" alt="Citer" title="Citer ce post" id="quote_{posts.ID}" />
+                            </a>
+                        </if>
+                        <a href="#header"><img src="./images/icones/up.gif" alt="Haut de Page" title="Haut de Page" /></a>
+                    </span>
+                    #{posts.ID_POST} - <a href="#p{posts.ID}">{posts.DATE}</a>
+                </td>
+            </tr>
+            <tr class="messages">
+                <td class="userinfo">
+                    <ul class="userinfo">
+                        <li class="user_name" title="{posts.U_STATUS}"><img src="./images/icones/status_{posts.U_LOGGED_STATUS}line.png" alt="{posts.U_STATUS}" class="logged_status" /> {posts.U_NAME}</li>
+                        <if condition="{$posts.U_QUOTE}"><li class="user_quote">{posts.U_QUOTE}</li></if>
+                        <li class="user_avatar"><img src="http://www.gravatar.com/avatar/{posts.U_AVATAR}" alt="Avatar" /></li>
+
+                        <if condition="{$posts.U_LVL} <= {__$GRP_MODO__}">
+                            <li class="user_level"><span class="{posts.U_CLASS}">{posts.U_GRP}</span></li>
+                        </if>
+
+                        <if condition="{$IS_FORUM_MODO}">
+                            <li class="user_nbr_messages"><span class="gras">Messages :</span> {posts.U_NBR_MESSAGES}</li>
+                            <li class="user_ip"><span class="gras">IP :</span> {posts.U_IP}</li>
+                        </if>
+                    </ul>
+                </td>
+
+                <td class="content" id="content_tr_p{posts.ID}">
+                    <div id="msg_edit_p{posts.ID}">
+                        <div class="message" id="content_{posts.ID}"<if condition="{$IS_FORUM_MODO} || {$posts.IS_AUTHOR}"> onmouseover="eip_title({posts.ID})" ondblclick="edit_in_place({posts.ID});"</if>>
+                            <if cond="{$posts.IS_PREVIOUS} && {$posts.FIRST}"><strong>Dernier message de la page précédente :</strong><br /></if>
+                            {posts.CONTENT}
+                        </div>
+                        <if condition="{$posts.EDIT_TIMES} > 0"><div class="edited" id="edit_p{posts.ID}">Dernière édition {posts.EDIT_DATE}, par {posts.EDIT_USER}</div></if>
+                    </div>
+                    <if condition="{$posts.U_SIGNATURE}">
+                        <div class="signature">{posts.U_SIGNATURE}</div>
+                    </if>
+                </td>
+            </tr>
+
+            <if condition="{$posts.FIRST}">
+                <tr class="google">
+                    <td colspan="2">
+                        <!-- http://www.cromwell-intl.com/technical/google-adsense-and-xhtml.html //-->
+                        <!--[if IE]><include tpl="./google/adsense_topic.html" /><![endif]-->
+                        <!--[if !IE]><!--><object data="./tpl/files/google/adsense_topic.html" type="text/html" class="google" /><!--><![endif]-->
+                    </td>
+                </tr>
+            </if>
+        </block>
+    </tbody>
+</table>
+
+<include tpl="forums/topics_info.html" />
+
+<if condition="{$TOPIC_OPENED}">
+    <form action="reply-topic-{TOPIC_ID}.html" method="post">
+        <fieldset id="fast_reply">
+            <input type="hidden" name="from_fast_reply" value="1" />
+
+            <legend><label for="reply">Réponse Rapide</label></legend>
+            <textarea name="reply" rows="5" cols="40" id="reply"></textarea><br />
+
+            <input type="submit" name="send" value="Répondre" /> <input type="submit" name="send" value="Plus d'options..." />
+        </fieldset>
+    </form>
+</if>
+
+<!--//--><div class="aftertopic"><!--//-->
+    <form action="" method="post">
+        <fieldset class="jumpbox">
+            <select class="jumpbox" name="jump_to" onchange="jumpbox(this);">
+                <optgroup label="En général...">
+                    <option <if cond="{$CURRENT_JPBX} == 0">selected="selected" </if>value="index.html">Index</option>
+                    <if condition="{$IS_LOGGED}">
+                        <option value="logout.html">Déconnexion</option>
+                        <option disabled="disabled">Mon Profil</option>
+                        <option disabled="disabled">Mes MPs</option>
+                        <if condition="{$IS_MODO}">
+                            <option disabled="disabled">Panneau de Modération</option>
+                            <if condition="{$IS_ADMIN}">
+                                <option disabled="disabled">Panneau d'Administration</option>
+                            </if>
+                        </if>
+                    <else />
+                        <option value="register.html">Inscription</option>
+                        <option value="login.html">Connexion</option>
+                    </if>
+                </optgroup>
+                <block name="jumpbox_cat">
+                    <optgroup label="{jumpbox_cat.NAME}">
+                        <block name="forums" parent="jumpbox_cat">
+                            <option <if cond="{$CURRENT_JPBX} != 0 && {$CURRENT_JPBX} == {$forums.ID}">selected="selected" </if>value="forum-{forums.ID}-p1.html">|{forums.LEVEL} -- {forums.NAME}</option>
+                        </block>
+                    </optgroup>
+                </block>
+            </select>
+            <input type="submit" value="Go !" />
+        </fieldset>
+    </form>
+
+    <div class="actions_modo">
+        <ul class="modo_options">
+            <li>Avertir un modérateur</li>
+            <if condition="{$IS_FORUM_MODO} || {$IS_AUTHOR}">
+                <li><a href="moderation-solve-{TOPIC_ID}.html"><if condition="{$TOPIC_SOLVED}">Enlever<else />Ajouter</if> le marqueur "Résolu" pour ce sujet</a></li>
+                <if condition="{$IS_FORUM_MODO}">
+                    <li><a href="moderation-post-it-{TOPIC_ID}.html"><if condition="{$TOPIC_POSTIT}">Enlever<else />Ajouter</if> le marqueur "Post-It" de ce sujet</a></li>
+                    <li><a href="moderation-lock-{TOPIC_ID}.html"><if condition="{$TOPIC_CLOSED}">Enlever<else />Ajouter</if> le marqueur "Fermé" de ce sujet</a></li>
+                    <li><a href="moderation-move-{TOPIC_ID}.html">Déplacer le sujet</a></li>
+                    <li>Supprimer ce sujet</li>
+                </if>
+            </if>
+        </ul>
+    </div>
+<!--//--></div><!--//-->
+
+<div class="clearer"></div>
+<include tpl="foot.html" />

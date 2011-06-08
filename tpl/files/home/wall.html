@@ -1,0 +1,13 @@
+<include tpl="head.html" />
+                    <div class="code_overall">
+                        <span class="code_top">{FILE}</span>
+                        <code class="code_main code_{TYPE}">{SOURCE_CODE}</code>
+                    </div>
+                    
+                    <if condition="{$SOURCE_CODE_COMPILED} != ''">
+                        <div class="code_overall">
+                            <span class="code_top">{FILE} : Fichier Compilé par Talus' TPL</span>
+                            <code class="code_main code_php">{SOURCE_CODE_COMPILED}</code>
+                        </div>
+                    </if>
+<include tpl="foot.html" />

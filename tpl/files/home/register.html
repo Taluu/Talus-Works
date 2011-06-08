@@ -1,0 +1,44 @@
+<include tpl="head.html" />
+				<h1>Inscription sur Talus' Works</h1>
+				<p>Bienvenu sur le formulaire d'inscription à Talus' Works !</p>
+				<p>Vous pourrez fournir ici les informations vous concernant pour que vous puissez acceder à un espace membre, régler deux trois options du site (citons par exemple le décalage horaire, le temps d'attente des messages, etc), ...</p>
+				<p>Cette inscription, bien que nécessaire à la participation aux forums de Talus' Works, est facile et facilement accessible pour qui veut.</p>
+				<p>Si vous avez activé le Javascript, vous pourrez par exemple prochainement demander un mot de passe aléatoire, si vous ne savez pas quoi donner :D</p>
+				<p class="centre grand rouge">Notez que Tous les champs sont obligatoires !</p>
+				<if condition="{$ERR_MSG} != ''">
+					<p class="centre rouge gras">{ERR_MSG}</p>
+				</if>
+				
+				<form action="" method="post">
+					<fieldset class="register">
+						<legend>S'inscrire sur Talus' Works</legend>
+						<p class="field">
+							<label for="nickname">Login :</label> 
+							<input type="texte" name="nickname" id="nickname" maxlength="10" size="25" value="{NICKNAME}" />
+						</p>
+						
+						<p class="field">
+							<label for="mdp">Mot de Passe :</label>
+							<input type="password" name="mdp" id="mdp" size="25" />
+						</p>
+						
+						<p class="field">
+							<label for="confirm_mdp">Confirmation du MdP :</label>
+							<input type="password" name="confirm_mdp" id="confirm_mdp" size="25" />
+						</p>
+						
+						<p class="field">
+							<label for="email">Email :</label> 
+							<input type="texte" name="email" id="email" size="25" value="{EMAIL}" />
+						</p>
+						
+						<p class="captcha">
+							<label for="captcha">Résolvez cette simple opération (chiffres) :<br /> Combien font {CAPTCHA['a']} {CAPTCHA['operateur']} {CAPTCHA['b']} ?</label> 
+							<input type="texte" name="captcha" id="captcha" size="10" />
+						</p>
+						
+						<p class="rules_accept"><label><input type="checkbox" name="rules" /> J'ai lu et j'accepte</label> <a href="cgu.html#rules">le règlement</a></p>
+						<p class="send"><input type="submit" name="send" value="Lancer l'inscription !" /></p>
+					</fieldset>
+				</form>
+<include tpl="foot.html" />

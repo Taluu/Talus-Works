@@ -1,0 +1,25 @@
+<include tpl="head.html" />
+				<h1>Création d'un sujet (Forum <a href="forum-{ID}.html">{F_NAME|protect}</a>)</h1>
+				<p>Vous voulez participer à ce sujet ? Pas de problèmes, postez juste un message ici :)</p>
+				<p>Veuillez simplement respecter les règles (voir les CGU)...</p>
+				<p class="centre grand rouge">Notez que le champ du titre et du contenu sont obligatoires !</p>
+				<if condition="{$ERR_MSG} != ''">
+					<p class="centre rouge gras">{ERR_MSG}</p>
+				</if>
+				
+				<form action="" method="post">
+					<fieldset class="reply">
+						<legend>Création d'un sujet dans <a href="forum-{ID}.html">{F_NAME|protect}</a></legend>
+						<label class="label_cote gras" for="t_title">Titre : </label><input type="text" id="t_title" name="t_title" value="{T_TITLE|protect}" class="input_txt" /><br />
+						<label class="label_cote" for="t_description">Description : </label><input type="text" id="t_description" name="t_description" class="input_txt" value="{T_DESCRIPTION|protect}" /><br />
+						<label class="label_cote gras" for="content">Message : </label><textarea id="content" cols="40" rows="10" name="content">{CONTENT|protect}</textarea>
+						<if condition="{$IS_FORUM_MODO}"><br /><label for="t_postit">Marquer en post-it</label><input type="checkbox" id="t_postit" name="t_postit" <if condition="{$T_POSTIT}">checked="checked" </if>/><br /></if>
+						<input type="submit" name="send" value="Envoyer" />&nbsp;<input type="button" value="Prévisualiser" onclick="prev('content', 'prev');" />
+					</fieldset>
+				</form>
+			
+				<fieldset class="prev">
+					<legend>Prévisualisation :</legend>
+					<div id="prev"></div>
+				</fieldset>
+<include tpl="foot.html" />

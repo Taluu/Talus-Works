@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title><![CDATA[{RSS_TITLE}]]></title>
+        <description><![CDATA[{RSS_DESCRIPTION}]]></description>
+        <link>http://www.talus-works.net</link>
+        <pubDate>{RSS_PUBDATE}</pubDate>
+        <language>fr</language>
+        <block name="items">
+        
+            <item>
+                <title><![CDATA[{items.TITLE}]]></title>
+                <description><![CDATA[{items.SHORT}]]></description>
+                
+                <link>{items.LINK}</link>
+                <guid isPermaLink="false">{items.LINK}</guid>
+                <comments>{items.LINK}</comments>
+                
+                <author>rss@talus-works.net (<![CDATA[{items.AUTHOR}]]>)</author>
+                <pubDate>{items.PUBDATE}</pubDate>
+            </item>
+        </block>
+    </channel>
+</rss>

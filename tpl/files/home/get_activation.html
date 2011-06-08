@@ -1,0 +1,25 @@
+<include tpl="head.html" />
+				<h1>Renvoi d'une clé d'activation</h1>
+				<p>Vous n'avez pas reçu votre clé d'activation ? Pas grave, ici, vous pourrez démarrer une procédure pour en réavoir une autre par mail !</p>
+				<p>Vous devrez juste fournir votre adresse mail (celle avec laquelle vous vous êtes enregistré, ou plutôt celle de votre profil) ; par la suite, vous recevrez une nouvelle clé d'activation par mail, qui vous permettra d'activer votre compte. Suivez ensuite les instructions du mail et du lien qui vous seront données.</p>
+				<p class="centre grand rouge">Notez que Tous les champs sont obligatoires !</p>
+				<if condition="{$ERR_MSG} != ''">
+					<p class="centre rouge gras">{ERR_MSG}</p>
+				</if>
+				<form action="" method="post">
+					<fieldset class="register">
+						<legend>Renvoi d'une clé d'activation</legend>
+						<p>
+							<label for="email" class="label_cote">Email :</label> 
+							<input type="texte" name="email" id="email" size="25" value="{EMAIL}" />
+						</p>
+						
+						<p class="captcha">
+							<label for="captcha">Résolvez cette simple opération (chiffres) :<br /> Combien font {CAPTCHA['a']} {CAPTCHA['operateur']} {CAPTCHA['b']} ?</label> 
+							<input type="texte" name="captcha" id="captcha" size="10" />
+						</p>
+						
+						<p class="send" style="clear:left;"><input type="submit" name="send" value="Envoyez moi une nouvelle clé !" /></p>
+					</fieldset>
+				</form>
+<include tpl="foot.html" />

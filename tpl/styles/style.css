@@ -1,0 +1,482 @@
+/**
+ * CSS Principal.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *      
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *      
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA. 
+ *
+ * @package Talus' Works
+ * @author Baptiste "Talus" Clavié <talusch@gmail.com>
+ * @copyright ©Talus, Talus' Works 2007+
+ * @link http://www.talus-works.net Talus' Works
+ * @license http://www.gnu.org/licenses/gpl.html GNU Public License 3+
+ * @begin ??/12/2007, Talus
+ * @last 18/06/2009, Talus
+ */
+
+* {
+	background-color:transparent;
+}
+
+/* Liens */
+a:link,
+a:visited {
+	color: #000080;
+}
+a:hover {
+	color: #FF0000;
+}
+a:link,
+a:visited,
+a:hover,
+a:active {
+	text-decoration:none;
+}
+
+p {
+	text-align:justify;
+}
+
+/**
+	*	Design.
+*/
+html { height:100%; }
+body { height:100%; margin: 0px; padding: 0px;}
+
+body {
+    font-size:97%;
+	background-color:#F5F5F5;
+	overflow:auto;
+}
+
+#header .left,
+#header .right {
+	padding:10px;
+	height:20px;
+}
+
+#header .left {
+	float:left;
+}
+
+#header .right {
+	float:right;
+}
+
+#header .logo {
+	text-align:center;
+	width:100%;
+	clear:both;
+}
+
+#header {
+	background:url('../../images/design/fond_header.png') repeat-x top;
+	background-color:#FFFFFF;
+	text-align:center;
+	height:300px;
+	width:100%;
+}
+
+#header .menu,
+#header .menu a:link,
+#header .menu a:visited,
+#header .menu a:active,
+#header .menu a:hover {
+	font-family:"OCR A Extended", "Courier New", Arial;
+	font-size:102%;
+	color:#47C;
+	text-align:center;
+	height:20px;
+}
+
+#header .menu a:hover {
+	color:#346;
+}
+
+#header .google {
+    width:500px;
+    height:80px;
+    
+    margin:auto;
+    
+    text-align:center;
+    vertical-align:middle;
+    
+    overflow:hidden;
+    border:0px;
+}
+
+#header div#google_container {
+	margin-top:5px;
+}
+
+@media screen,projection,handheld {
+	div.nav,
+	#header .menu,
+	#header .menu a:link,
+	#header .menu a:visited,
+	#header .menu a:active {
+		cursor:default;
+	}
+	
+	#header .menu a:hover {
+		cursor:pointer;
+	}
+	
+	#footer {
+	   cursor:default;
+	}
+}
+
+#container {
+	width:95%;
+	margin:auto;
+	border:1px dashed black;
+}
+
+#middle {
+	padding:10px;
+	background-color:#FFFFFF;
+}
+
+#footer {
+	text-align:center;
+	background:url('../../images/design/fond_footer.png') repeat-x top;
+	background-color:#E8E8E8;
+	height:110px;
+	padding:2px;
+	border:0px;
+}
+
+div.nav {
+	margin:15px;
+	margin-top:70px;
+	padding:5px;
+	background-color:#FAFAFA;
+	border:1px dotted black;
+	font-size:95%;
+}
+
+div.clearer {
+	clear:both;
+}
+
+/*** Groupes ***/
+
+
+.grp_admin,
+.grp_admin:link,
+.grp_admin:hover {
+	color:rgb(204, 0, 0);
+}
+
+.grp_modo,
+.grp_modo:link,
+.grp_modo:hover {
+	color:rgb(0, 0, 204);
+}
+
+.grp_user,
+.grp_user:link,
+.grp_user:hover {
+	color:rgb(0, 0, 0);
+}
+
+.grp_ls,
+.grp_ls:link,
+.grp_ls:hover {
+	color:rgb(0, 102, 0);
+}
+
+.grp_guest,
+.grp_guest:link,
+.grp_guest:hover {
+	color:rgb(0, 0, 0);
+}
+
+.grp_banned,
+.grp_banned:link,
+.grp_banned:hover {
+	color:#6C82B5;
+}
+
+/*#footer .clear {
+	border-top:1px dotted black;
+	width:555px;
+	margin:auto;
+}*/
+
+
+
+h1 {
+	color:#47C;
+	text-align:center;
+	font-size:210%;
+}
+
+h1.message_error,
+h1.message_neutral,
+h1.message_confirm {
+	font-size:170%;
+	font-weight:bolder;
+}
+
+/*** Formulaires ***/
+fieldset.register {
+	width:320px;
+}
+
+fieldset.contact {
+	width:500px;
+}
+
+fieldset.contact,
+fieldset.register {
+	border:1px solid black;
+	margin:auto;
+}
+
+fieldset.contact legend,
+fieldset.register legend {
+	font-size:110%;
+}
+
+fieldset#fast_reply {
+	width:75%;
+	margin:auto;
+	margin-top:10px;
+	border:1px solid black;
+	text-align:center;
+	margin-bottom:10px;
+}
+
+form fieldset textarea {
+    font-family:"Courier New", Arial;
+    font-size:90%;
+    background-color:#FEFEFE;
+    border:1px dashed #CCCCCC;
+    padding:5px;
+}
+
+textarea#content,
+textarea.eip_edit,
+textarea#reply {
+	width:99%;
+}
+
+textarea.eip_edit {
+	width:100%;
+}
+
+textarea#content {
+	width:75%;
+}
+
+form fieldset input[type="text"],
+form fieldset input[type="password"] {
+    font-size:90%;
+    background-color:#FEFEFE;
+    border:1px dashed #CCCCCC;
+    padding:5px;
+    margin-bottom:3px;
+}
+
+.eip_input,
+.input_txt {
+	font-family:"Courier New", Arial;
+}
+
+.input_txt {
+	width:75%;
+}
+
+.eip_input {
+	width:100%;
+}
+
+.eip_sender {
+	text-align:center;
+}
+
+fieldset.eip,
+fieldset.reply {
+	width:90%;
+	margin:auto;
+	margin-bottom:20px;
+	border:1px solid black;
+	text-align:center;
+	padding:10px;
+}
+
+fieldset.eip {
+	border:0px;
+}
+
+fieldset.reviews,
+fieldset.prev {
+	width:90%;
+
+	margin:auto;
+	margin-bottom:20px;
+	padding:10px;
+	
+	border:1px solid black;
+}
+
+div.reviews {
+	overflow:auto;
+	height:300px;
+}
+
+#prev {
+	margin:auto;
+	max-height:200px !important;
+	height:200px;
+	padding:10px;
+	
+	overflow:auto;
+	
+	text-align:left;
+}
+
+p.field {
+	text-align:right;
+}
+
+label.label_cote {
+	width:120px;
+	float:left;
+	text-align:right;
+	margin-left:2px;
+	margin-right:2px;
+}
+
+p.captcha {
+	text-align:center;
+}
+
+p.captcha input#captcha {
+	text-align:center;
+}
+
+p.rules_accept {
+	text-align:center;
+	font-size:110%;
+}
+
+p.rules_accept,
+p.rules_accept a:link,
+p.rules_accept a:visited,
+p.rules_accept a:active {
+	color:rgb(0, 102, 0);
+}
+
+p.rules_accept a:hover {
+	color: #FF0000;
+}
+
+p.send {
+	text-align:center;
+}
+
+/*** Divers ***/
+img.home_img {
+	border:0px;
+}
+
+a img {
+	border:0px;
+}
+
+div#ajax_waiter {
+	display:none;
+	
+	position:absolute;
+	position:fixed;
+	left:2px;
+	top:2px;
+	z-index:100;
+	
+	border:1px solid black;
+	
+	background:url("../../images/loading.gif") no-repeat 7px center;
+	background-color:#9B9191;
+	
+	width:100px;
+	
+	padding: 5px;
+	padding-left:30px;
+}
+
+.droite {
+    text-align:right;
+}
+
+.italique {
+    font-style:italic;
+}
+
+/* Les menus avec onglets sur le coté */
+div.tabs {
+	float:left;
+	width:225px;
+}
+
+div.tabs ul.tabs {
+	list-style-type:none;
+	list-style-position:outside;
+}
+
+div.tabs ul.tabs li,
+div.tabs ul.tabs li.current_tab {
+	border:1px dashed #CCCCCC;
+	background-color:#FBFBFB;
+	padding:5px;
+	margin:5px;
+}
+
+div.tabs ul.tabs li:hover {
+	background-color:#F5F5F5;
+}
+
+div.tabs ul.tabs li.current_tab {
+	background-color:#F8F8F8;
+}
+
+/*** Modération ***/
+div.modo {
+	margin-left:275px;
+}
+
+/*** Pagination ***/
+.pagination_overall {
+    border:1px dashed #BDBDBD;
+    border-top:0px;
+    border-left:0px;
+}
+
+.pagination {
+    margin:3px;
+}
+
+.current {
+    font-weight:bold;
+    
+    padding:0px 3px;
+    
+    /**border:1px solid #BDBDBD;/**/
+    
+    background-color:#FBFBFB;
+}
+/**}/**/

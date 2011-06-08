@@ -1,0 +1,49 @@
+<include tpl="head.html" />
+        /*
+         * Quelques blocs imbriqués...
+         * Pour imbriquer des blocs, il suffit de préciser dans le nom du bloc
+         * déclaré (dans le tpl) le nom du bloc parent. Même si celui-ci est
+         * lui-même issu d'une imbrication de blocs.
+         */
+        <block name="repeat">
+            <div class="repeat">
+                Je suis un bloc "repeat" (je me repete pendant {repeat.SIZE_OF} tours), itération n°{repeat.CURRENT}, et la variable {\CHOSE} vaut {repeat.CHOSE}.
+                <block name="again" parent="repeat">
+                    <div class="repeat_again">
+                        Je suis le bloc again, un sous bloc de "repeat" (je me repete pendant {again.SIZE_OF} tours), itération n°{again.CURRENT}, et la variable "{\BIDULE}" vaut {again.BIDULE}.
+                        <if condition="{$again.FIRST}">
+                            C'est la <em>première</em> fois que vous me voyez.
+                        <elseif condition="{$again.LAST}" />
+                            C'est <em>dernière</em> fois que vous me voyez.
+                        </if>
+                        <div class="again_more">
+                            <block name="more" parent="again">
+                                Je suis le bloc more, un sous bloc de "again", et la valeur de "{\more.TRUCMUCHE[{\$MACHIN}]}" vaut {more.TRUCMUCHE[{$MACHIN}]}.
+                            </block>
+                        </div>
+                    </div>
+                </block>
+            </div>
+        </block>
+
+        /*
+         * Zou, un petit foreach !
+         */
+        <p>Une petite utilisation de foreach :</p>
+        <ol>
+            <foreach ary="{$CHOSE}">
+                <li>
+                    {KEY,CHOSE} =>
+                    <if condition="{VALUE,$CHOSE} == 'deux'">
+                        <span style="color: green">-- {VALUE,CHOSE}</span>
+                    <else />
+                        {VALUE,CHOSE}
+                    </if>
+                </li>
+            </foreach>
+        </ol>
+
+        /*
+         * Une dernière inclusion.
+         */
+<include tpl="foot.html" />

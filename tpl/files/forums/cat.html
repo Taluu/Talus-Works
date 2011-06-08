@@ -1,0 +1,67 @@
+<include tpl="head.html" />
+				{TITRE}
+				<if condition="{$DESCRIPTION}"><div class="forum_description">{DESCRIPTION}</div></if>
+				
+				<table class="list_forums">
+					<thead>
+						<tr>
+							<th colspan="2" class="lbl_cat">Catégorie</th>
+							<th class="lbl_nbr">Sujets</th>
+							<th class="lbl_nbr">Messages</th>
+							<th class="lbl_last">Dernier Message</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr>
+							<th colspan="2" class="lbl_cat">Catégorie</th>
+							<th class="lbl_nbr">Sujets</th>
+							<th class="lbl_nbr">Messages</th>
+							<th class="lbl_last">Dernier Message</th>
+						</tr>
+					</tfoot>
+					<tbody>
+						<block name="cat">
+							<tr class="cats">
+								<td colspan="2" class="cat_name">
+									<if condition="!{$cat.IS_READ}"><a href="markread-cat-{cat.ID}.html"><img src="./images/icones/markread.png" alt="Marquer cette catégorie comme lue" title="Marquer cette catégorie comme lue" /></a></if>
+									<a href="{cat.URL}">{cat.NAME}</a>
+								</td>
+								<td class="cat_stats">{cat.TOPICS}</td>
+								<td class="cat_stats">{cat.POSTS}</td>
+								<td class="cat_empty"></td>
+							</tr>
+							
+							<block name="forums" parent="cat">
+								<tr class="forums">
+									<td class="flag_read">
+										<if condition="!{$forums.IS_READ}"><a href="markread-forums-{forums.ID}.html"></if>
+										<img src="./images/icones/forum_{forums.ICON_PREFIX}read.png" <if condition="{$forums.IS_READ}">alt="Vous avez lu tous les sujets de ce forum" title="Vous avez lu tous les sujets de ce forum"<else />alt="Vous avez des sujets non lus dans ce forum" title="Vous avez des sujets non lus dans ce forum"</if> />
+										<if condition="!{$forums.IS_READ}"></a></if>								
+									</td>
+									<td class="forums_name">
+										<a href="{forums.URL}">{forums.NAME}</a>
+										<if condition="{$forums.DESCRIPTION}">
+											<br />{forums.DESCRIPTION}
+										</if>
+										<block name="subs" parent="forums">
+											<if condition="{$subs.FIRST}"><br /><img src="./images/icones/list_sub.png" alt="Sous Forums : "/></if>
+											<a href="{subs.URL}">{subs.NAME}</a><if condition="!{$subs.LAST}">, </if>
+										</block>
+									</td>
+									<td class="stats">
+										{forums.TOPICS}
+									</td>
+									<td class="stats">
+										{forums.POSTS}
+									</td>
+									<td class="last_answer">
+										{forums.LAST_TOPIC}
+										{forums.LAST_DATE}
+										{forums.LAST_USER}
+									</td>
+								</tr>
+							</block>
+						</block>
+					</tbody>
+				</table>
+<include tpl="foot.html" />

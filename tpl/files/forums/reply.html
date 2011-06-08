@@ -1,0 +1,69 @@
+<include tpl="head.html" />
+				<h1>Répondre à un sujet (<a href="topic-{ID}.html">{T_TITLE|protect}</a>)</h1>
+				<p>Vous voulez participer à ce sujet ? Pas de problèmes, postez juste un message ici :)</p>
+				<p>Veuillez simplement respecter les règles (voir les CGU)...</p>
+				<p class="centre grand rouge">Notez que Tous les champs sont obligatoires !</p>
+				<if condition="{$ERR_MSG} != ''">
+					<p class="centre rouge gras">{ERR_MSG}</p>
+				</if>
+				
+				<form action="" method="post">
+					<fieldset class="reply">
+						<legend>Ajout d'une réponse au sujet <a href="topic-{ID}.html">{T_TITLE|protect}</a></legend>
+						<textarea id="reply" cols="40" rows="10" name="reply">{CONTENT|protect}</textarea>
+						<if condition="{$CAN_SOLVE}">
+							<br /><label>Marquer comme résolu : <input type="checkbox" name="t_solved" <if condition="{$T_SOLVED}">checked="checked" </if>/></label>
+							<if condition="{$IS_FORUM_MODO}">
+								<br /><label>Fermer le sujet : <input type="checkbox" name="t_closed" <if condition="{$T_CLOSED}">checked="checked" </if>/></label>
+							</if>
+							<br />
+						</if>
+						<br />
+						<input type="submit" name="send" value="Répondre" />&nbsp;<input type="button" value="Prévisualiser" onclick="prev('reply', 'prev');" />
+					</fieldset>
+				</form>
+			
+				<fieldset class="prev">
+					<legend>Prévisualisation :</legend>
+					<div id="prev"></div>
+				</fieldset>
+				
+				<!-- Reviews ! //-->
+				<fieldset class="reviews">
+					<legend>Review du sujet</legend>
+					<div class="reviews">
+						<table class="list_messages">
+							<tbody>
+								<block name="review">
+									<tr class="post_date">
+										<td class="date_left" id="p{review.ID}">#{review.ID} - {review.DATE}</td>
+										<td class="date_right">
+											<img src="./images/icones/quote_off.gif" id="quote_{review.ID}" alt="Citer" title="Citer ce post" onclick="quote({review.ID}, 'reply');" onmouseover="this.style.cursor = 'pointer';" onmouseout="this.style.cursor = 'default';" />									
+											<a href="#header"><img src="./images/icones/up.gif" alt="Haut de Page" title="Haut de Page" /></a>
+										</td>
+									</tr>
+									<tr class="messages">
+										<td class="userinfo">
+											<ul class="userinfo">
+												<li class="user_name">{review.U_NAME}</li>
+												<if condition="{$review.U_AVATAR}"><li class="user_avatar"><img src="{review.U_AVATAR}" alt="Avatar" /></li></if>
+												
+												<li class="user_level"><span class="gras">Statut :</span> <span class="{review.U_CLASS}">{review.U_GRP}</span></li>
+											</ul>
+										</td>
+										
+										<td class="content">
+											<div class="message">
+												<if condition="{$review.LAST}">
+													<strong>Voici le premier post du sujet :</strong><br />
+												</if>
+												{review.CONTENT}
+											</div>
+										</td>
+									</tr>
+								</block>
+							</tbody>
+						</table>
+					</div>
+				</fieldset>
+<include tpl="foot.html" />

@@ -1,0 +1,14 @@
+<table class="topics_info">
+					<tbody>
+						<tr>
+							<td class="post_new_topics"><if condition="{$FORUM_OPENED}"><a href="new-topic-{FORUM_ID}.html">Nouveau Sujet</a><else />Forum Fermé</if> - <if condition="{$TOPIC_OPENED}"><a href="reply-topic-{TOPIC_ID}.html">Nouvelle Réponse</a><else />Sujet Fermé</if></td>
+							<td class="right">
+								<if condition="{$USE_PAGINATION}">
+									<span class="pagination_overall">
+										Pages : <block name="pagination">{pagination.PAGE}</block>
+									</span>
+								</if>
+							</td>
+						</tr>
+					</tbody>
+				</table>

@@ -1,0 +1,6 @@
+				<div class="nav">
+					Vous êtes ici : <a href="{__DOMAIN_REDIRECT__}"><img src="./images/design/home.png" class="home_img" alt="Accueil" /> Home</a>
+					<foreach ary="{$FIL}">
+						<span class="grand">&#187;</span> <if condition="{VALUE,$FIL}"><a href="{VALUE,FIL}">{KEY,FIL}</a><else />{KEY,FIL}</if>
+					</foreach>
+				</div>

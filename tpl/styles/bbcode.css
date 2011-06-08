@@ -1,0 +1,70 @@
+/**
+ * CSS des balises de mises en forme.
+ *
+ * Vous êtes libre d'utiliser et de distribuer ce script comme vous l'entendez, en gardant à l'esprit 
+ * que ce script est, à l'origine, fait par des développeurs bénévoles : en conséquence, veillez à 
+ * laisser le Copyright, par respect de ceux qui ont consacré du temps à la création du script. 
+ *
+ * @package Talus' Works
+ * @author Baptiste "Talus" Clavié <talusch@gmail.com>
+ * @copyright ©Talus, Talus' Works 2008, 2009
+ * @link http://www.talus-works.net Talus' Works
+ * @license http://www.gnu.org/licenses/gpl.html GNU Public License 2+
+ * @begin ??/02/2008, Talus
+ * @last 03/09/2008, Talus
+ */
+
+/* ----------------------------------------- */
+/* | CSS POUR LES BALISES CODE ET CITATION | */
+/* ----------------------------------------- */
+
+.quote_top,
+.quote_main {
+	padding : 7px;
+}
+
+.quote_top {
+	font-size:120%;
+	font-weight:bold;
+	color:#000000;
+}
+
+.quote_main {
+	font-size:95%;
+	margin:5px;
+	overflow:auto;
+	display:block;
+}
+
+.quote_main{
+	border: 1px dashed #8C5F1C;
+}
+
+.souligne {
+    text-decoration:underline;
+}
+
+.barre {
+    text-decoration:line-through;
+}
+
+.titre {
+    display:inline;
+    font-size:150%;
+    font-weight:bold;
+    font-variant:small-caps;
+    margin:5px;
+}
+
+.sous_titre {
+    display:inline;
+    font-size:125%;
+    font-weight:normal;
+    font-style:italic;
+    margin:5px;
+}
+
+/*.code_main,
+.quote_main {
+	display:inline;
+}/**/

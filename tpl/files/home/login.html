@@ -1,0 +1,46 @@
+<include tpl="head.html" />
+				<h1>Connexion à Talus' Works</h1>
+				<p>Ici, vous pourrez vous connecter (sous réserves que votre compte soit activé ; vous auriez normalement du recevoir un mail d'activation prévu à cet effet, lors de votre inscription). Si vous n'êtes pas inscrit, inscrivez-vous !</p>
+				<p>Une fois connecté, vous pourrez <span class="barre">pourrir</span> poster sur les forums, avoir votre espace à vous, et pleins d'autres choses.</p>
+				<p>Si vous activez la connexion automatique, une cookie vous sera envoyé, vous permettant ainsi d'être automatiquement connecté lors de vos prochaines visites.</p>
+				<p>Vous ne vous êtes pas encore inscrits ? Qu'attendez-vous, c'est <a href="register.html">par ici</a> !</p>
+				<p class="rouge centre grand">Tous les champs sont obligatoires.</p>
+				<if condition="{$ERR_MSG} != ''">
+					<p class="centre grand rouge gras">{ERR_MSG}</p>
+				</if>
+				
+				<form action="" method="post">
+					<fieldset class="register">
+						<legend>Formulaire de Connexion à Talus' Works</legend>
+						<p>
+							<label for="nickname" class="label_cote">Login :</label>
+							<input type="text" name="nickname" id="nickname" value="{NICKNAME}" size="25" />
+						</p>
+						
+						<p>
+							<label for="mdp" class="label_cote">Mot de Passe :</label>
+							<input type="password" name="mdp" id="mdp" size="25" />
+						</p>
+						
+						<p class="send">
+							<label>
+								<input type="checkbox" name="autologin" /> 
+								Activer la connexion automatique
+							</label>
+						</p>
+						
+						<p class="send">
+							<input type="submit" name="send" value="Se Connecter" />
+                            <!-- <![CDATA[<input type="hidden" name="login_referer" value="{LOGIN_REFERER}" />]]> //-->
+						</p>
+					</fieldset>
+				</form>
+				
+				<h2>Liens utiles</h2>
+				<ul class="links">
+					<li><a href="register.html">Inscription au site</a></li>
+					<li><a href="forgot.html">J'ai oublié mon mot de passe !</a></li>
+					<li><a href="contact.html">Contacter le Webmaster</a></li>
+					<li><a href="activate.html">Pas encore reçu le lien de validation ?</a></li>
+				</ul>
+<include tpl="foot.html" />

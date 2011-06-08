@@ -1,0 +1,39 @@
+/**
+	*	CSS De Talus' TPL (Exemple)
+*/
+
+/* CSS de tous les blocs.*/
+div.repeat,
+div.repeat_again,
+div.again_more {
+	padding:20px;
+	
+	border:1px solid black;
+}
+
+/* CSS Des 2 blocs enfants de "repeat" */
+div.repeat_again,
+div.again_more {
+	font-style:italic;
+}
+
+/* CSS du bloc "repeat" */
+div.repeat {
+	font-weight:bold; 
+	
+	background-color:green; 
+}
+
+/* CSS du bloc "repeat.again" */
+div.repeat_again {
+	margin-left:20px;
+	
+	background-color:blue;
+}
+
+/* CSS Du bloc "again.more" */
+div.again_more {
+	margin-left:40px;
+	
+	background-color:red;
+}

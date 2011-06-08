@@ -1,0 +1,7 @@
+					<div class="tabs">
+						<ul class="tabs">
+							<block name="tabs">
+								<li<if cond="{$SELECTED_TAB} == {$tabs.TAB}"> class="current_tab"</if>><if cond="{$SELECTED_TAB} != {$tabs.TAB}"><a href="{tabs.URL}"></if>{tabs.TITLE}<if cond="{$SELECTED_TAB} != {$tabs.TAB}"></a></if></li>
+							</block>
+						</ul>
+					</div>

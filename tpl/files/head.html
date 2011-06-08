@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+{DOCTYPE}
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+  <head>
+    <title>{TITLE} &bull; Talus' Works<if cond="{__$IS_LOCAL__} == true"> &bull; Local</if></title>
+
+    <!-- Meta Tags //-->
+    <meta name="keywords" content="developpement web, web, developpement, php, tpl, template, talus, talus works, works, talus tpl, moteur, compile, cache, work, scripts, documentation, doc, dynamique, rapide, rapidite, abstraction layer, support, forums, forum" />
+    <meta name="description" content="{SITE_DESC}" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="Content-Type" content="{CONTENT_TYPE};charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <meta name="identifier-URL" content="http://www.talus-works.net" />
+    <!--  <meta name="verify-v1" content="xkWsXFNap6YljUxtN9pD569y3EUIgmxdxZYQl52UlpM=" />//-->
+    <meta name="verify-v1" content="hFYf+EoUCI8Qzs9ujQlt6UZnSEnrDsCPQffgh1BZH+A=" />
+    <meta name="robots" content="index,follow" />
+    <meta name="copyrights" content="Talus &copy;2007 - {COPY_DATE}" />
+    <meta name="powered" content="Talus' Works" />
+
+    <!-- Styles //-->
+    <link rel="stylesheet" href="./tpl/styles/style.css" type="text/css" media="all" />
+
+    <block name="style_css">
+      <if cond="{$style_css.FIRST}"><!-- Regles d'import //--><style type="text/css"></if>
+      @import "./tpl/styles/{style_css.IMPORT}.css";
+      <if cond="{$style_css.LAST}"></style></if>
+    </block>
+
+    <!-- RSS //-->
+    <link rel="alternate" href="http://feeds.feedburner.com/tw-last-topics" type="application/rss+xml" title="Derniers sujets postés sur Talus' Works" />
+    <link rel="alternate" href="http://feeds.feedburner.com/tw-last-messages" type="application/rss+xml" title="Derniers messages postés sur Talus' Works" />
+    <foreach ary="{$RSS}">
+      <link rel="alternate" href="{VALUE,RSS['href']}" type="application/rss+xml" title="{VALUE,RSS['title']}" />
+    </foreach>
+
+    <block name="js">
+      <if cond="{$js.FIRST}"><script type="text/javascript">/*<![CDATA[*/</if>
+      {js.LINE}
+      <if cond="{$js.LAST}">/*]]>*/</script></if>
+    </block>
+
+    <block name="orphan_tags">
+      <if cond="{$orphan_tags.FIRST}"><!-- Balises orphelines supplémentaires. !--></if>
+      <{orphan_tags.NAME}<block name="attr" parent="orphan_tags">{attr.NAME}="{attr.VALUE}" </block>/>
+    </block>
+  </head>
+  <body>
+    <div id="box"></div>
+    <div id="ajax_waiter">Chargement...</div>
+    <div id="container"> 
+    <!--[if lt IE 7]>
+      <div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>
+        <div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border: none;' alt='Close this notice'/></a></div>  
+        <div style='width: 640px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
+        <div style='width: 75px; float: left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div>
+          <div style='width: 275px; float: left; font-family: Arial, sans-serif;'>
+            <div style='font-size: 14px; font-weight: bold; margin-top: 12px;'>Vous utilisez un navigateur dépassé depuis près de 8 ans!</div>
+            <div style='font-size: 12px; margin-top: 6px; line-height: 12px;'>Pour une meilleure expérience web, prenez le temps de mettre votre navigateur à jour.</div>
+          </div>
+          
+          <div style='width: 75px; float: left;'><a href='http://fr.www.mozilla.com/fr/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border: none;' alt='Get Firefox 3.5'/></a></div>
+          <div style='width: 75px; float: left;'><a href='http://www.microsoft.com/downloads/details.aspx?FamilyID=341c2ad5-8c3d-4347-8c03-08cdecd8852b&DisplayLang=fr' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border: none;' alt='Get Internet Explorer 8'/></a></div>
+          <div style='width: 73px; float: left;'><a href='http://www.apple.com/fr/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border: none;' alt='Get Safari 4'/></a></div>
+          <div style='float: left;'><a href='http://www.google.com/chrome?hl=fr' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border: none;' alt='Get Google Chrome'/></a></div>
+        </div>
+      </div>
+    <![endif]-->
+    
+    <div id="header">
+    <div class="userinfo">
+        <div class="left">
+          Bonjour
+          <if cond="{$IS_LOGGED}">
+            {USERNAME}
+            <if cond="{$NB_MESSAGES} > 0">Vous avez {NB_MESSAGES} nouveaux messages privés</if>
+          <else />
+            Visiteur, vous n'êtes pas connecté.
+          </if>
+        </div> <!-- end container > header > userinfo > left //-->
+
+        <div class="right">
+        <if condition="{$IS_LOGGED}">
+          <if condition="{$IS_MODO}">
+            <if condition="{$IS_ADMIN}">Administration - </if>
+            <a href="moderation.html">Modération</a> |  
+          </if> /* end {$IS_MODO} */
+          
+          Mon Profil - Messages... Non Lus | Postés | Privés - <a href="logout-{U_ID}.html">Déconnexion</a>
+        <else />
+          <a href="login.html">Connexion</a> - <a href="register.html">Inscription</a>
+        </if> /* end {$IS_LOGGED} */
+      </div> <!-- end container > header > userinfo > right //-->
+    </div> <!-- end container > header > userinfo //-->
+
+    <div class="logo"><img src="{LOGO_ALEATOIRE}" alt="Talus' Works" class="img_logo" /></div>
+    
+    <div class="menu">
+      <span class="gras grand">&#171;</span> 
+      <a href="http://www.talus-works.net">Home</a> - 
+      <a href="http://blog.talus-works.net">Blog</a> - 
+      <a href="http://www.twitter.com/talus_works">Twitter</a> - 
+      <a href="/forum-13-p1-releases.html">Téléchargements</a> -
+      <a href="/explorer.html" title="Explorateur de Sources">Explorateur</a> -
+      <a href="/contact.html" title="Formulaire de contact par mail">Contact</a>
+      <span class="gras grand">&#187;</span>
+    </div><!-- end container > header > menu //--> 
+    
+    <div id="google_container" class="google">
+      <!-- http://www.cromwell-intl.com/technical/google-adsense-and-xhtml.html //-->
+      <!--[if IE]><include tpl="./google/adsense_main.html" /><![endif]-->
+      <!--[if !IE]><!--><object data="./tpl/files/google/adsense_main.html" type="text/html" class="google" /><!--><![endif]-->
+    </div><!-- end container > header > google_main //-->
+  </div> <!-- end container > header //-->
+
+  <div id="middle">
+    <include tpl="navigation.html" />

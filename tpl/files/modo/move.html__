@@ -1,0 +1,33 @@
+<include tpl="head.html" />
+<include tpl="tabs.html" />
+				<div class="modo">
+					<h1>Déplacement d'un sujet</h1>
+					<p>Pour déplacer un sujet, veuillez entrer l'id d'un sujet à déplacer, puis selectionner le forum de destination.</p>
+					<form action="" method="post">
+					<fieldset class="register">
+						<legend>Déplacement d'un sujet</legend>
+						<p class="field">
+							<label for="id">ID du Sujet :</label> 
+							<input type="texte" name="id" id="id" size="25" value="{ID}" />
+						</p>
+						<if cond="{$VIEW}">
+    						<p class="field">
+    							<label for="fid">Forum destinataire :</label>
+    							<select class="jumpbox" name="fid">
+        							<block name="select">
+        								<optgroup label="{select.NAME}">
+        									<block name="select.forums">
+        										<option value="{forums.ID}"<if cond="{$forums.ID} == {$CURRENT}"> selected="selected"</if>>|{forums.LEVEL} -- {forums.NAME}</option>
+        									</block>
+        								</optgroup>
+        							</block>
+        						</select>
+    						</p>
+						</if>
+						
+						<p class="send"><input type="submit" name="send" value="Envoyer" /></p>
+					</fieldset>
+				</form>
+				</div>
+				<div class="clearer"></div>
+<include tpl="foot.html" />

@@ -1,0 +1,34 @@
+<include tpl="head.html" />
+				<h1>Edition d'une réponse</h1>
+				<p>Vous avez fait une erreur sur ce message ? Pas de problèmes, vous pouvez l'éditer :)</p>
+				<p>Veuillez simplement à ce que les règles soient toujours respectées (voir les CGU)...</p>
+				<p class="centre grand rouge">Notez que les champs en <span class="gras">gras</span> sont obligatoires !</p>
+				<if condition="{$ERR_MSG} != ''">
+					<p class="centre rouge gras">{ERR_MSG}</p>
+				</if>
+				
+				<form action="" method="post">
+					<fieldset class="reply">
+						<legend>Edition d'une réponse</legend>
+						<if condition="{$EDIT_TITLE}">
+							<label class="label_cote gras" for="t_title">Titre :</label> <input type="text" name="t_title" for="t_title" value="{T_TITLE|protect}" class="input_txt" /><br />
+							<label class="label_cote" for="t_description">Description :</label> <input type="text" name="t_description" value="{T_DESCRIPTION|protect}" class="input_txt" /><br />
+							<label class="label_cote gras" for="reply">Message : </label>
+						</if>
+						<textarea id="reply" cols="40" rows="10" style="width:75%;" name="reply">{CONTENT|protect}</textarea>
+						<if condition="{$CAN_SOLVE}">
+							<br /><label>Marquer comme résolu : <input type="checkbox" name="t_solved" <if condition="{$T_SOLVED}">checked="checked" </if>/></label>
+							<if condition="{$IS_FORUM_MODO}">
+								<br /><label>Fermer le sujet : <input type="checkbox" name="t_closed" <if condition="{$T_CLOSED}">checked="checked" </if>/></label>
+							</if>
+						</if>
+						<br />
+						<input type="submit" name="send" value="Editer" />&nbsp;<input type="button" value="Prévisualiser" onclick="prev('reply', 'prev');" />
+					</fieldset>
+				</form>
+			
+				<fieldset class="prev">
+					<legend>Prévisualisation :</legend>
+					<div id="prev">{PREV}</div>
+				</fieldset>
+<include tpl="foot.html" />

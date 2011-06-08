@@ -1,0 +1,36 @@
+<include tpl="head.html" />
+				<h1>Oubli de Mot de Passe - 2ème partie</h1>
+				<p>Si vous êtes ici, c'est que vous vous êtes munis de votre clé, et que vous êtes prêt à changer votre mot de passe !</p>
+				<p>Ici, vous devez juste renseigner la clé qui vous a été donnée dans le mail envoyé, et de remplir les champs pour obtenir un nouveau mot de passe. Rien de plus compliqué !</p>
+				<p class="centre grand rouge">Notez que Tous les champs sont obligatoires !</p>
+				<if condition="{$ERR_MSG} != ''">
+					<p class="centre rouge gras">{ERR_MSG}</p>
+				</if>
+				<form action="" method="post">
+					<fieldset class="register">
+						<legend>Changement de mot de passe</legend>
+						<p>
+							<label for="key" class="label_cote">Clé reçue :</label> 
+							<input type="texte" name="key" id="key" size="25" />
+						</p>
+						
+						<p>
+							<label for="mdp" class="label_cote">Mot de Passe :</label>
+							<input type="password" name="mdp" id="mdp" size="20" />
+						</p>
+						
+						<p>
+							<label for="confirm_mdp" class="label_cote">Confirmation du MdP :</label>
+							<input type="password" name="confirm_mdp" id="confirm_mdp" size="20" />
+						</p>
+						
+						<p class="captcha" style="clear:left;">
+							<label for="captcha">Résolvez cette simple opération (chiffres) :<br /> Combien font {CAPTCHA['a']} {CAPTCHA['operateur']} {CAPTCHA['b']} ?</label> 
+							<input type="texte" name="captcha" id="captcha" size="10" />
+						</p>
+						
+						<p class="send"><input type="submit" name="send" value="Changer le mot de passe" /></p>
+					</fieldset>
+					<input type="hidden" name="id" value="{ID}" />
+				</form>
+<include tpl="foot.html" />

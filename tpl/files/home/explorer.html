@@ -1,0 +1,40 @@
+<include tpl="head.html" />
+                <h2>Exploration de Talus' Works (Repertoire courant : {CURRENT})</h2>
+                
+                <if cond="{$CURRENT} == '~/'">
+                    <p>Bienvenue sur l'explorateur de Sources de Talus' Works ! Talus' Works étant un site <strong>entièrement</strong> open-source, j'estime ainsi que vous avez le droit de pouvoir vous balader dans toutes ses sources (sauf celles protégées... :p).</p>
+                </if>
+                
+                <table class="dirlist">
+                    <thead>
+                        <tr>
+                            <th class="arbo_name" colspan="2"><a href="{U_NAME}">Nom</a></th>
+                            <th><a href="{U_TYPE}">Type</a></th>
+                            <th><a href="{U_FILESIZE}">Taille</a></th>
+                            <th><a href="{U_LASTMODIF}">Dernière modification</a></th>
+                        </tr>
+                    </thead>
+                    
+                    <tfoot>
+                        <tr>
+                            <th class="arbo_name" colspan="2"><a href="{U_NAME}">Nom</a></th>
+                            <th><a href="{U_TYPE}">Type</a></th>
+                            <th><a href="{U_FILESIZE}">Taille</a></th>
+                            <th><a href="{U_LASTMODIF}">Dernière modification</a></th>
+                        </tr>
+                    </tfoot>
+                    
+                    <tbody>
+                        <block name="dirlist">
+                            
+                            <tr>
+                                <td class="arbo_imgtype"><img src="{dirlist.IMGTYPE}" /></td>
+                                <td class="arbo_name"><a href="{dirlist.URL}">{dirlist.NAME}</a></td>
+                                <td class="arbo_type">{dirlist.TYPE}</td>
+                                <td class="arbo_size">{dirlist.SIZE}</td>
+                                <td class="arbo_lastmodif">{dirlist.LASTMODIF}</td>
+                            </tr>
+                        </block>
+                    </tbody>
+                </table>
+<include tpl="foot.html" />

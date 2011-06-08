@@ -1,0 +1,23 @@
+<include tpl="head.html" />
+<include tpl="tabs.html" />
+				<div class="modo">
+					<h1>Derniers Abus</h1>
+					<block name="abuse">
+						<if cond="{$abuse.FIRST}"><ul class="modo_list"></if>
+							<li><a href="moderation-abuse-{abuse.ID}.html">Signalement #{abuse.ID}</a>, par {abuse.USER}, le {user.DATE} <if cond="{$abuse.IS_SOLVED}"><span class="abuse_solved">(Résolu par {abuse.MODO}, le {abuse.DATE_SOLVED})</span></if></li>
+						<if cond="{$abuse.LAST}"></ul></if>
+					<blockelse />
+						Aucuns signalements dans la base de donnée !
+					</block>
+					
+					<h1>Derniers Avertissements donnés</h1>
+					<block name="warn">
+						<if cond="{$warn.FIRST}"><ul class="modo_list"></if>
+							<li><a href="moderation-warn-{warn.UID}.html">{warn.TYPE}</a>, par {warn.MODO}, pour {warn.USER}, le {warn.DATE})</li>
+						<if cond="{$warn.LAST}"></ul></if>
+					<blockelse />
+						Aucuns avertissements dans la base de donnée !
+					</block>
+				</div>
+				<div class="clearer"></div>
+<include tpl="foot.html" />
