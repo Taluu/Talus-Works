@@ -70,10 +70,13 @@ $res->bindValue(':id', intval($_GET['id']), SQL::PARAM_INT);
 $res->execute();
 $res = null;
 
+$file = explode('/', $data['s_path']);
+$file = $file[count($file) - 1];
+
 // -- Tout baigne, on lance le dl.
 header('Pragma: no-cache');
 header('Content-Type: application/octetstream; name="http://dl.talus-works.net/' . $data['s_path'] . '"');
-header('Content-disposition: inline;filename=' . $data['s_path']);
+header('Content-disposition: inline;filename=' . $file);
 
 echo file_get_contents('../downloads/' . $data['s_path']);
 
