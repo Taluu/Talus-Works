@@ -1,0 +1,28 @@
+{
+    "name": "taluu/talus-works",
+    "description": "A little board to make some support available for Link TPL",
+    "keywords": ["board", "support", "Link TPL"],
+    "license": "BSD-3-Clause",
+    "version": "2.0.0-dev",
+
+    "authors": [
+        {
+            "name": "Baptiste \"Talus\" Clavié",
+            "email": "clavie.b@gmail.com",
+            "homepage": "http://baptiste.xn--clavi-fsa.net/",
+            "role": "Lead Developper"
+        }
+    ],
+    
+
+    "minimum-stability": "dev",
+
+    "require": {
+        "php": ">= 5.4.0-dev",
+        "silex/silex": "1.0.*"
+    },
+
+    "autoload": {
+        "psr-0": { "Taluu\\Talus_Works": "src/" }
+    } 
+}
