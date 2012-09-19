@@ -3,7 +3,7 @@
  * Todo : make a real header
  */
 
-namespace Taluu\Talus_Works;
+namespace Talus_Works;
 
 use \Silex\Application as BaseApplication;
 

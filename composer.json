@@ -40,6 +40,6 @@
     },
 
     "autoload": {
-        "psr-0": { "Taluu\\Talus_Works": "src/" }
+        "psr-0": { "Talus_Works": "src/" }
     } 
 }
