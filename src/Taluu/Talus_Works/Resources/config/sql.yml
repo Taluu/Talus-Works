@@ -1,0 +1,8 @@
+database:
+  driver: pdo_mysql
+
+  dbname: talus_works
+  host: localhost
+  user: root
+  password: ~
+  path: ~

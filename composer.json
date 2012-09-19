@@ -1,5 +1,5 @@
 {
-    "name": "taluu/talus-works",
+    "name": "talus/talus-works",
     "description": "A little board to make some support available for Link TPL",
     "keywords": ["board", "support", "Link TPL"],
     "license": "BSD-3-Clause",
@@ -19,7 +19,24 @@
 
     "require": {
         "php": ">= 5.4.0-dev",
-        "silex/silex": "1.0.*"
+
+        "silex/silex": "1.0.*",
+
+        "doctrine/dbal": "2.2.*",
+
+        "twig/twig": ">=1.8,<2.0-dev",
+        "symfony/twig-bridge": "2.1.*",
+
+        "monolog/monolog": ">=1.0.0",
+
+        "symfony/validator": "2.1.*",
+
+        "symfony/security": "2.1.*",
+
+        "symfony/form": "2.1.*",
+        "symfony/yaml": "2.1.*",
+        "symfony/config": "2.1.*",
+        "symfony/translation": "2.1.*"
     },
 
     "autoload": {
