@@ -35,8 +35,11 @@ class Application extends BaseApplication {
 
         // register silex providers
         $app->register(new \Silex\Provider\ValidatorServiceProvider);
-        //$app->register(new \Silex\Provider\SecurityServiceProvider);
         $app->register(new \Silex\Provider\SessionServiceProvider);
+
+        $app->register(new \Silex\Provider\SecurityServiceProvider, array(
+            'security.firewalls' => array()
+        ));
 
         $app->register(new \Silex\Provider\MonologServiceProvider, array(
             'monolog.logfile' => __DIR__ . '/Resources/logs/' . ($_env === self::DEBUG ? 'debug' : 'prod') . '.log',
