@@ -40,7 +40,8 @@ class Application extends BaseApplication {
 
         $app->register(new \Silex\Provider\MonologServiceProvider, array(
             'monolog.logfile' => __DIR__ . '/Resources/logs/' . ($_env === self::DEBUG ? 'debug' : 'prod') . '.log',
-            'monolog.level'   => $_env === self::DEBUG ? Logger::DEBUG : Logger::Error
+            'monolog.level'   => $_env === self::DEBUG ? Logger::DEBUG : Logger::ERROR,
+            'monolog.name'    => 'twk'
         ));
 
         $app->register(new \Silex\Provider\FormServiceProvider, array(
