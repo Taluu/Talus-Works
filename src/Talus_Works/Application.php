@@ -11,27 +11,21 @@ use \Symfony\Component\Yaml\Yaml;
 
 use \Monolog\Logger;
 
+use \Talus_Works\Controller\DownloadController,
+    \Talus_Works\Controller\ForumController;
+
 
 class Application extends BaseApplication {
-    const DEBUG = 0, PROD = 1;
-
     /**
      * Prepare the application, sets the right things on their way
      *
-     * @param integer $_env Environment used (either debug or prod)
-     *
      * @return Application
      */
-    public static function prepare($_env = self::PROD) {
+    public static function prepare() {
         $app = new self;
 
-        // debug ?
-        if ($_env === self::DEBUG) {
-            $app['debug'] = true;
-        }
-
-        // todo : load global config ?
-        $sqlAccess = Yaml::parse(file_get_contents(__DIR__ . '/Resources/config/sql.yml'))['database'];
+        $app['config'] = []; //todo : use provider ?
+        $app['debug'] = (bool) getenv('IS_DEBUG') ?: false;
 
         // register silex providers
         $app->register(new \Silex\Provider\ValidatorServiceProvider);
@@ -42,8 +36,8 @@ class Application extends BaseApplication {
         ));
 
         $app->register(new \Silex\Provider\MonologServiceProvider, array(
-            'monolog.logfile' => __DIR__ . '/Resources/logs/' . ($_env === self::DEBUG ? 'debug' : 'prod') . '.log',
-            'monolog.level'   => $_env === self::DEBUG ? Logger::DEBUG : Logger::ERROR,
+            'monolog.logfile' => __DIR__ . '/Resources/logs/' . ($app['debug'] ? 'debug' : 'prod') . '.log',
+            'monolog.level'   => $app['debug'] ? Logger::DEBUG : Logger::ERROR,
             'monolog.name'    => 'twk'
         ));
 
@@ -56,10 +50,12 @@ class Application extends BaseApplication {
         ));
 
         $app->register(new \Silex\Provider\DoctrineServiceProvider, array(
-            'db.options' => $sqlAccess
+            'db.options' => Yaml::parse(__DIR__ . '/Resources/config/sql.yml') ['database']
         ));
 
-        // -- todo : load the right controller...
+        // -- load controllers
+        $app->mount('/forums', new ForumController);
+        $app->mount('/downloads', new DownloadController);
 
         return $app;
     }
