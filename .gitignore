@@ -2,3 +2,6 @@ vendor
 cache
 composer.lock
 .idea
+
+*.log
+
