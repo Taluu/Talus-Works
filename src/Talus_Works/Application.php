@@ -11,13 +11,13 @@ use \Symfony\Component\Yaml\Yaml;
 
 use \Monolog\Logger;
 
-use \Talus_Works\Controller\DownloadController,
-    \Talus_Works\Controller\ForumController;
+use \Talus_Works\Controller\ForumController,
+    \Talus_Works\Controller\DownloadController;
 
-use \Silex\Provider\MonologServiceProvider,
-    \Silex\Provider\TwigServiceProvider,
+use \Silex\Provider\SecurityServiceProvider,
     \Silex\Provider\DoctrineServiceProvider,
-    \Silex\Provider\SecurityServiceProvider;
+    \Silex\Provider\MonologServiceProvider,
+    \Silex\Provider\TwigServiceProvider;
 
 use \Nutwerk\Provider\DoctrineORMServiceProvider;
 
@@ -74,6 +74,9 @@ class Application extends BaseApplication {
         // -- load controllers
         $app->mount('/forums', new ForumController);
         $app->mount('/downloads', new DownloadController);
+
+        // todo : Use another home, instead of forums ?
+        $app->match('/', function (Application $app) { return $app->redirect('/forums'); });
 
         return $app;
     }

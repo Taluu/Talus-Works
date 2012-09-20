@@ -1,7 +1,9 @@
 vendor
 cache
-composer.lock
 .idea
 
 *.log
+*.phar
+composer.lock
+src/Talus_Works/Resources/config/sql.yml
 
