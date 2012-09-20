@@ -19,6 +19,10 @@ use \Silex\Provider\MonologServiceProvider,
     \Silex\Provider\DoctrineServiceProvider,
     \Silex\Provider\SecurityServiceProvider;
 
+use \Nutwerk\Provider\DoctrineORMServiceProvider;
+
+use \Doctrine\Common\Cache\ArrayCache;
+
 
 class Application extends BaseApplication {
     /**
@@ -34,7 +38,7 @@ class Application extends BaseApplication {
 
         // register silex providers
         $app->register(new SecurityServiceProvider, array(
-            'security.firewalls' => array()
+            'security.firewalls' => []
         ));
 
         $app->register(new MonologServiceProvider, array(
@@ -44,12 +48,28 @@ class Application extends BaseApplication {
         ));
 
         $app->register(new TwigServiceProvider, array(
-            'twig.path' => __DIR__ . '/Resources/views'
+            'twig.path'    => __DIR__ . '/Resources/views',
+
+            'twig.options' => array(
+                'debug' => $app['debug'],
+                'cache' => __DIR__ . '/../../cache/tpl'
+            )
         ));
 
         $app->register(new DoctrineServiceProvider, array(
-            'db.options' => Yaml::parse(__DIR__ . '/Resources/config/sql.yml') ['database']
+            'db.options' => Yaml::parse(__DIR__ . '/Resources/config/sql.yml')['database']
         ));
+
+        $app->register(new DoctrineORMServiceProvider, array(
+            'db.orm.auto_generate_proxies' => $app['debug'],
+            'db.orm.proxies_dir'           => __DIR__ . '/../../cache/doctrine/Proxy',
+            'db.orm.cache'                 => new ArrayCache,
+
+            'db.orm.entities'              => [array(
+                'type'      => 'annotation',
+                'path'      => __DIR__ . '/Entity',
+                'namespace' => '\Talus_Works\Entity'
+        )]));
 
         // -- load controllers
         $app->mount('/forums', new ForumController);
