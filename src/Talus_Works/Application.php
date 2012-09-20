@@ -14,10 +14,7 @@ use \Monolog\Logger;
 use \Talus_Works\Controller\DownloadController,
     \Talus_Works\Controller\ForumController;
 
-use \Silex\Provider\ValidatorServiceProvider,
-    \Silex\Provider\SessionServiceProvider,
-    \Silex\Provider\MonologServiceProvider,
-    \Silex\Provider\FormServiceProvider,
+use \Silex\Provider\MonologServiceProvider,
     \Silex\Provider\TwigServiceProvider,
     \Silex\Provider\DoctrineServiceProvider,
     \Silex\Provider\SecurityServiceProvider;
@@ -36,9 +33,6 @@ class Application extends BaseApplication {
         $app['debug'] = (bool) getenv('IS_DEBUG') ?: false;
 
         // register silex providers
-        $app->register(new ValidatorServiceProvider);
-        $app->register(new SessionServiceProvider);
-
         $app->register(new SecurityServiceProvider, array(
             'security.firewalls' => array()
         ));
@@ -47,10 +41,6 @@ class Application extends BaseApplication {
             'monolog.logfile' => __DIR__ . '/Resources/logs/' . ($app['debug'] ? 'debug' : 'prod') . '.log',
             'monolog.level'   => $app['debug'] ? Logger::DEBUG : Logger::ERROR,
             'monolog.name'    => 'twk'
-        ));
-
-        $app->register(new FormServiceProvider, array(
-            'form.secret' => sha1(__DIR__)
         ));
 
         $app->register(new TwigServiceProvider, array(
