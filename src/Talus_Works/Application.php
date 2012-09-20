@@ -14,6 +14,14 @@ use \Monolog\Logger;
 use \Talus_Works\Controller\DownloadController,
     \Talus_Works\Controller\ForumController;
 
+use \Silex\Provider\ValidatorServiceProvider,
+    \Silex\Provider\SessionServiceProvider,
+    \Silex\Provider\MonologServiceProvider,
+    \Silex\Provider\FormServiceProvider,
+    \Silex\Provider\TwigServiceProvider,
+    \Silex\Provider\DoctrineServiceProvider,
+    \Silex\Provider\SecurityServiceProvider;
+
 
 class Application extends BaseApplication {
     /**
@@ -28,28 +36,28 @@ class Application extends BaseApplication {
         $app['debug'] = (bool) getenv('IS_DEBUG') ?: false;
 
         // register silex providers
-        $app->register(new \Silex\Provider\ValidatorServiceProvider);
-        $app->register(new \Silex\Provider\SessionServiceProvider);
+        $app->register(new ValidatorServiceProvider);
+        $app->register(new SessionServiceProvider);
 
-        $app->register(new \Silex\Provider\SecurityServiceProvider, array(
+        $app->register(new SecurityServiceProvider, array(
             'security.firewalls' => array()
         ));
 
-        $app->register(new \Silex\Provider\MonologServiceProvider, array(
+        $app->register(new MonologServiceProvider, array(
             'monolog.logfile' => __DIR__ . '/Resources/logs/' . ($app['debug'] ? 'debug' : 'prod') . '.log',
             'monolog.level'   => $app['debug'] ? Logger::DEBUG : Logger::ERROR,
             'monolog.name'    => 'twk'
         ));
 
-        $app->register(new \Silex\Provider\FormServiceProvider, array(
+        $app->register(new FormServiceProvider, array(
             'form.secret' => sha1(__DIR__)
         ));
 
-        $app->register(new \Silex\Provider\TwigServiceProvider, array(
+        $app->register(new TwigServiceProvider, array(
             'twig.path' => __DIR__ . '/Resources/views'
         ));
 
-        $app->register(new \Silex\Provider\DoctrineServiceProvider, array(
+        $app->register(new DoctrineServiceProvider, array(
             'db.options' => Yaml::parse(__DIR__ . '/Resources/config/sql.yml') ['database']
         ));
 
