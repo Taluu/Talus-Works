@@ -25,6 +25,7 @@ use \Talus_Works\Controller\ForumController,
 use \Silex\Provider\SecurityServiceProvider,
     \Silex\Provider\DoctrineServiceProvider,
     \Silex\Provider\MonologServiceProvider,
+    \Silex\Provider\SessionServiceProvider,
     \Silex\Provider\TwigServiceProvider;
 
 use \Nutwerk\Provider\DoctrineORMServiceProvider;
@@ -49,6 +50,8 @@ class Application extends BaseApplication {
         $app['debug'] = (bool) getenv('IS_DEBUG') ?: false;
 
         // register silex providers
+        $app->register(new SessionServiceProvider);
+
         $app->register(new SecurityServiceProvider, array(
             'security.firewalls' => []
         ));
@@ -83,9 +86,35 @@ class Application extends BaseApplication {
                 'namespace' => '\Talus_Works\Entity'
         )]));
 
+        // callbacks
+        $callbacks = [];
+
+        $callbacks['onlyIfLoggedIn'] = function () use ($app) {
+            if (!$app['session']->has('userId')) {
+                $app['session']->setFlash('error', 'You must be logged in before continuing');
+
+                return $app->redirect('/login');
+            }
+        };
+
+        $callbacks['onlyIfLoggedOut'] = function () use ($app) {
+            if ($app['session']->has('userId')) {
+                $app['session']->setFlash('error', 'You must be logged out before continuing');
+
+                return $app->redirect('/');
+            }
+        };
+
         // -- load controllers
         $app->mount('/forums', new ForumController);
         $app->mount('/downloads', new DownloadController);
+
+        // -- general links
+        $app->match('/login', function (Application $app) { return 'you should log in ! :)'; })
+            ->before($callbacks['onlyIfLoggedOut']);
+
+        $app->match('/logout', function (Application $app) { return '???'; })
+            ->before($callbacks['onlyIfLoggedIn']);
 
         // todo : Use another home, instead of forums ?
         $app->match('/', function (Application $app) { return $app->redirect('/forums'); });
