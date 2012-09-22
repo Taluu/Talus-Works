@@ -15,8 +15,7 @@ namespace Talus_Works;
 
 use \Silex\Application as BaseApplication;
 
-use \Symfony\Component\Yaml\Yaml,
-    \Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use \Symfony\Component\Yaml\Yaml;
 
 use \Monolog\Logger;
 
@@ -31,7 +30,9 @@ use \Nutwerk\Provider\DoctrineORMServiceProvider;
 use \Doctrine\Common\Cache\ArrayCache;
 
 use \Talus_Works\Controller\ForumController,
-    \Talus_Works\Controller\DownloadController;
+    \Talus_Works\Controller\DownloadController,
+
+    \Talus_Works\Exception\Security\AccessDeniedException;
 
 /**
  * Main Application. Extended to prepare stuff.
@@ -92,42 +93,32 @@ class Application extends BaseApplication {
                                                 'namespace' => '\Talus_Works\Entity']]
         ));
 
-        // callbacks
-        $callbacks = [];
-
-        $callbacks['onlyIfLoggedIn'] = function () use ($app) {
-            if (!$app['session']->has('userId')) {
-                $app['session']->setFlash('error', 'You must be logged in before continuing');
-
-                return $app->redirect('/login');
-            }
-        };
-
-        $callbacks['onlyIfLoggedOut'] = function () use ($app) {
-            if ($app['session']->has('userId')) {
-                $app['session']->setFlash('error', 'You must be logged out before continuing');
-
-                return $app->redirect('/');
-            }
-        };
-
         // -- load controllers
         $app->mount('/forums', new ForumController);
         $app->mount('/downloads', new DownloadController);
 
         // -- general links
-        $app->match('/login', function (Application $app) { return 'you should log in ! :)'; })
-            ->before($callbacks['onlyIfLoggedOut']);
+        $app->match('/login', function (Application $app) { return 'todo : handle logging in'; })
+            ->before(function () use ($app) {
+                if ($app['session']->has('userId')) {
+                    throw new AccessDeniedException('You\'re already logged in !', '/');
+                }
+            });
 
-        $app->match('/logout', function (Application $app) { return '???'; })
-            ->before($callbacks['onlyIfLoggedIn']);
+        $app->match('/logout', function (Application $app) { return 'todo : handle logging out'; })
+            ->before(function () use ($app) {
+                if (!$app['session']->has('userId')) {
+                    throw new AccessDeniedException('You\'re already logged out !', '/');
+                }
+            });
 
         // todo : Use another home, instead of forums ?
         $app->match('/', function (Application $app) { return $app->redirect('/forums'); });
 
         // errors
         $app->error(function (AccessDeniedException $e) use ($app) {
-            
+            $app['session']->setFlash('error', $e->getMessage());
+            $app->redirect($e->getUrl());
         });
 
         return $app;
