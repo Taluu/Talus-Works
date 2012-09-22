@@ -15,12 +15,10 @@ namespace Talus_Works;
 
 use \Silex\Application as BaseApplication;
 
-use \Symfony\Component\Yaml\Yaml;
+use \Symfony\Component\Yaml\Yaml,
+    \Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use \Monolog\Logger;
-
-use \Talus_Works\Controller\ForumController,
-    \Talus_Works\Controller\DownloadController;
 
 use \Silex\Provider\SecurityServiceProvider,
     \Silex\Provider\DoctrineServiceProvider,
@@ -31,6 +29,9 @@ use \Silex\Provider\SecurityServiceProvider,
 use \Nutwerk\Provider\DoctrineORMServiceProvider;
 
 use \Doctrine\Common\Cache\ArrayCache;
+
+use \Talus_Works\Controller\ForumController,
+    \Talus_Works\Controller\DownloadController;
 
 /**
  * Main Application. Extended to prepare stuff.
@@ -53,7 +54,15 @@ class Application extends BaseApplication {
         $app->register(new SessionServiceProvider);
 
         $app->register(new SecurityServiceProvider, array(
-            'security.firewalls' => []
+            'security.firewalls'      => [],
+
+            'security.providers'      => ['main' => ['entity' => ['class'    => '\\Talus_Works\\Entity\\User',
+                                                                  'property' => 'username']
+                                                    ]
+                                         ],
+
+            'security.role_hierarchy' => ['ROLE_ADMIN'     => 'ROLE_MODERATOR',
+                                          'ROLE_MODERATOR' => 'ROLE_USER'],
         ));
 
         $app->register(new MonologServiceProvider, array(
@@ -65,10 +74,8 @@ class Application extends BaseApplication {
         $app->register(new TwigServiceProvider, array(
             'twig.path'    => __DIR__ . '/Resources/views',
 
-            'twig.options' => array(
-                'debug' => $app['debug'],
-                'cache' => __DIR__ . '/../../cache/tpl'
-            )
+            'twig.options' => ['debug' => $app['debug'],
+                               'cache' => __DIR__ . '/../../cache/tpl']
         ));
 
         $app->register(new DoctrineServiceProvider, array(
@@ -80,11 +87,10 @@ class Application extends BaseApplication {
             'db.orm.proxies_dir'           => __DIR__ . '/../../cache/doctrine/Proxy',
             'db.orm.cache'                 => new ArrayCache,
 
-            'db.orm.entities'              => [array(
-                'type'      => 'annotation',
-                'path'      => __DIR__ . '/Entity',
-                'namespace' => '\Talus_Works\Entity'
-        )]));
+            'db.orm.entities'              => [['type'      => 'annotation',
+                                                'path'      => __DIR__ . '/Entity',
+                                                'namespace' => '\Talus_Works\Entity']]
+        ));
 
         // callbacks
         $callbacks = [];
@@ -118,6 +124,11 @@ class Application extends BaseApplication {
 
         // todo : Use another home, instead of forums ?
         $app->match('/', function (Application $app) { return $app->redirect('/forums'); });
+
+        // errors
+        $app->error(function (AccessDeniedException $e) use ($app) {
+            
+        });
 
         return $app;
     }
