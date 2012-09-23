@@ -13,7 +13,7 @@
 
 namespace Talus_Works\Exception\Security;
 
-use \Symfony\Component\Security\Core\Exception\AccessDeniedException as AccessDeniedException_Base;
+use \Symfony\Component\Security\Core\Exception\AccessDeniedException as AccessDeniedException;
 
 use \Talus_Works\Application;
 
@@ -22,7 +22,7 @@ use \Talus_Works\Application;
  *
  * @author Baptiste "Talus" Clavié <clavie.b@gmail.com>
  */
-class AccessDeniedException extends AccessDeniedException_Base {
+class AccessDeniedRedirectedException extends AccessDeniedException {
     private $_url = null;
 
     /**

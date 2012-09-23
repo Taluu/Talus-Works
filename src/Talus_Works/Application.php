@@ -15,7 +15,8 @@ namespace Talus_Works;
 
 use \Silex\Application as BaseApplication;
 
-use \Symfony\Component\Yaml\Yaml;
+use \Symfony\Component\Yaml\Yaml,
+    \Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use \Monolog\Logger;
 
@@ -32,7 +33,7 @@ use \Doctrine\Common\Cache\ArrayCache;
 use \Talus_Works\Controller\ForumController,
     \Talus_Works\Controller\DownloadController,
 
-    \Talus_Works\Exception\Security\AccessDeniedException;
+    \Talus_Works\Exception\Security\AccessDeniedRedirectedException;
 
 /**
  * Main Application. Extended to prepare stuff.
@@ -43,6 +44,7 @@ class Application extends BaseApplication {
     /**
      * Prepare the application, sets the right things on their way
      *
+     * @throws AccessDeniedRedirectedException
      * @return Application
      */
     public static function prepare() {
@@ -101,14 +103,14 @@ class Application extends BaseApplication {
         $app->match('/login', function (Application $app) { return 'todo : handle logging in'; })
             ->before(function () use ($app) {
                 if ($app['session']->has('userId')) {
-                    throw new AccessDeniedException('You\'re already logged in !', '/');
+                    throw new AccessDeniedRedirectedException('You\'re already logged in !', '/');
                 }
             });
 
         $app->match('/logout', function (Application $app) { return 'todo : handle logging out'; })
             ->before(function () use ($app) {
                 if (!$app['session']->has('userId')) {
-                    throw new AccessDeniedException('You\'re already logged out !', '/');
+                    throw new AccessDeniedRedirectedException('You\'re already logged out !', '/');
                 }
             });
 
@@ -116,9 +118,10 @@ class Application extends BaseApplication {
         $app->match('/', function (Application $app) { return $app->redirect('/forums'); });
 
         // errors
-        $app->error(function (AccessDeniedException $e) use ($app) {
+        $app->error(function (AccessDeniedRedirectedException $e) use ($app) {
             $app['session']->setFlash('error', $e->getMessage());
-            $app->redirect($e->getUrl());
+
+            return $app->redirect($e->getUrl());
         });
 
         return $app;
