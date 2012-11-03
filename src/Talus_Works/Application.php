@@ -15,8 +15,7 @@ namespace Talus_Works;
 
 use \Silex\Application as BaseApplication;
 
-use \Symfony\Component\Yaml\Yaml,
-    \Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use \Symfony\Component\Yaml\Yaml;
 
 use \Monolog\Logger;
 
@@ -26,9 +25,7 @@ use \Silex\Provider\SecurityServiceProvider,
     \Silex\Provider\SessionServiceProvider,
     \Silex\Provider\TwigServiceProvider;
 
-use \Nutwerk\Provider\DoctrineORMServiceProvider;
-
-use \Doctrine\Common\Cache\ArrayCache;
+use \Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 
 use \Talus_Works\Controller\ForumController,
     \Talus_Works\Controller\DownloadController,
@@ -86,13 +83,11 @@ class Application extends BaseApplication {
         ));
 
         $app->register(new DoctrineORMServiceProvider, array(
-            'db.orm.auto_generate_proxies' => $app['debug'],
-            'db.orm.proxies_dir'           => __DIR__ . '/../../cache/doctrine/Proxy',
-            'db.orm.cache'                 => new ArrayCache,
+            'orm.proxies_dir' => __DIR__ . '/../../cache/doctrine/proxies',
 
-            'db.orm.entities'              => [['type'      => 'annotation',
-                                                'path'      => __DIR__ . '/Entity',
-                                                'namespace' => '\Talus_Works\Entity']]
+            'orm.em.options'  => ['mappings' => [['type'      => 'annotation',
+                                                  'path'      => __DIR__ . '/Entity',
+                                                  'namespace' => 'Talus_Works\Entity']]]
         ));
 
         // -- load controllers

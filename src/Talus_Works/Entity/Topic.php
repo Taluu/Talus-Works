@@ -13,7 +13,7 @@
 
 namespace Talus_Works\Entity;
 
-use \Doctrine\ORM\Mapping\Annotation;
+use \Doctrine\ORM\Mapping as ORM;
 
 /**
  * Topic Entity

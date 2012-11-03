@@ -22,19 +22,20 @@
 
         "silex/silex": "1.0.*",
 
-        "taluu/doctrine-orm-provider": "1.0.*",
-
-        "twig/twig": ">=1.8,<2.0-dev",
-        "symfony/twig-bridge": "2.1.*",
+        "twig/twig": ">=1.10,<2.0-dev",
+        "symfony/twig-bridge": ">=2.1,<2.3-dev",
 
         "monolog/monolog": ">=1.0.0",
 
-        "symfony/form": "2.1.*",
-        "symfony/yaml": "2.1.*",
-        "symfony/config": "2.1.*",
-        "symfony/security": "2.1.*",
-        "symfony/validator": "2.1.*",
-        "symfony/translation": "2.1.*",
+        "symfony/form": ">=2.1,<2.3-dev",
+        "symfony/yaml": ">=2.1,<2.3-dev",
+        "symfony/config": ">=2.1,<2.3-dev",
+        "symfony/security": ">=2.1,<2.3-dev",
+        "symfony/validator": ">=2.1,<2.3-dev",
+        "symfony/translation": ">=2.1,<2.3-dev",
+
+        "dflydev/doctrine-orm-service-provider": "dev-master",
+        "symfony/doctrine-bridge": ">=2.1,<2.3-dev",
 
         "mheap/Silex-Assetic": "*",
         "mheap/Silex-Gravatar": "*",

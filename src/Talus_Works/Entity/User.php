@@ -13,78 +13,243 @@
 
 namespace Talus_Works\Entity;
 
-use \Doctrine\ORM\Mapping\Annotation;
+use \Doctrine\ORM\Mapping as ORM;
 
-use \Symfony\Component\Security\Core\User\UserInterface;
+use \Symfony\Component\Security\Core\User\UserInterface,
+    \Symfony\Component\Security\Core\User\EquatableInterface,
+    \Symfony\Component\Security\Core\User\AdvancedUserInterface;
+
+use \Symfony\Component\Validator\Constraints as Assert;
+
+use \Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 
 /**
  * Topic Entity
  *
- * @ORM\Entity
+ * @Entity
+ * @Table
+ * @HasLifecycleCallbacks
+ *
+ * @DoctrineAssert\UniqueEntity("email")
+ * @DoctrineAssert\UniqueEntity("username")
+ *
  * @author Baptiste "Talus" Clavié <clavie.b@gmail.com>
  */
-class User implements UserInterface {
-    /**
-     * Returns the roles granted to the user.
-     *
-     * <code>
-     * public function getRoles()
-     * {
-     *     return array('ROLE_USER');
-     * }
-     * </code>
-     *
-     * Alternatively, the roles might be stored on a ``roles`` property,
-     * and populated in any number of different ways when the user object
-     * is created.
-     *
-     * @return Role[] The user roles
-     */
+class User implements AdvancedUserInterface, EquatableInterface {
+    private
+        /**
+         * @Id
+         * @Column(name = "id", type = "integer")
+         * @GeneratedValue(strategy = "AUTO")
+         */
+        $id,
+
+        /**
+         * @Column(type = "string", unique = true)
+         *
+         * @Assert\NotNull
+         * @Assert\NotBlank
+         */
+        $username,
+
+        /**
+         * @Column(type = "string", unique = true)
+         *
+         * @Assert\NotNull
+         * @Assert\NotBlank
+         * @Assert\Email
+         */
+        $email,
+
+        /** @Column(type = "string", length = 128) */
+        $password,
+
+        /** @Column(type = "string", length = 33) */
+        $salt,
+
+        /** @Column(type = "array") */
+        $roles = array('ROLE_USER'),
+
+        /** @Column(type = "datetime") */
+        $registeredAt,
+
+        /** @Column(type = "datetime", nullable = true) */
+        $lastConnectedAt,
+
+        /** @Column(type = "integer") */
+        $posts = 0,
+
+        /** @Column(type = "boolean") */
+        $locked = false,
+
+        /** @Column(type = "boolean") */
+        $enabled = false,
+
+        /** @Column(type = "text", nullable = true) */
+        $signature;
+
+    public function __construct() {
+        $this->setRegisteredAt(new \DateTime);
+    }
+
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function setIp($ip) {
+        $this->ip = $ip;
+    }
+
+    public function getIp() {
+        return $this->ip;
+    }
+
+    public function setLastConnectedAt(\DateTime $lastConnectedAt) {
+        $this->lastConnectedAt = $lastConnectedAt;
+    }
+
+    /** @return \DateTime */
+    public function getLastConnectedAt() {
+        return $this->lastConnectedAt;
+    }
+
+    public function setPosts($posts) {
+        $this->posts = $posts;
+    }
+
+    public function getPosts() {
+        return $this->posts;
+    }
+
+    public function setSignature($signature) {
+        $this->signature = $signature;
+    }
+
+    public function getSignature() {
+        return $this->signature;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setRegisteredAt(\DateTime $registeredAt) {
+        $this->registeredAt = $registeredAt;
+    }
+
+    /** @return \DateTime  */
+    public function getRegisteredAt() {
+        return $this->registeredAt;
+    }
+
+    /** {@inheritdoc} */
     public function getRoles() {
-        // TODO: Implement getRoles() method.
+        $this->roles;
     }
 
-    /**
-     * Returns the password used to authenticate the user.
-     *
-     * This should be the encoded password. On authentication, a plain-text
-     * password will be salted, encoded, and then compared to this value.
-     *
-     * @return string The password
-     */
+    /** {@inheritdoc} */
     public function getPassword() {
-        // TODO: Implement getPassword() method.
+        return $this->password;
     }
 
-    /**
-     * Returns the salt that was originally used to encode the password.
-     *
-     * This can return null if the password was not encoded using a salt.
-     *
-     * @return string The salt
-     */
+    /** {@inheritdoc} */
     public function getSalt() {
-        // TODO: Implement getSalt() method.
+        return $this->salt;
     }
 
-    /**
-     * Returns the username used to authenticate the user.
-     *
-     * @return string The username
-     */
+    /** {@inheritdoc} */
     public function getUsername() {
-        // TODO: Implement getUsername() method.
+        return $this->username;
     }
 
-    /**
-     * Removes sensitive data from the user.
-     *
-     * This is important if, at any given point, sensitive information like
-     * the plain-text password is stored on this object.
-     *
-     * @return void
-     */
-    public function eraseCredentials() {
-        // TODO: Implement eraseCredentials() method.
+    /** {@inheritdoc} */
+    public function eraseCredentials() {}
+
+    /** {@inheritdoc} */
+    public function isAccountNonLocked() {
+        return !$this->isAccountLocked();
+    }
+
+    public function isAccountLocked() {
+        return $this->locked;
+    }
+
+    public function lockAccount() {
+        if ($this->isAccountNonLocked()) {
+            $this->locked = true;
+        }
+    }
+
+    public function unlockAccount() {
+        if ($this->isAccountLocked()) {
+            $this->locked = false;
+        }
+    }
+
+    public function toggleLock() {
+        if ($this->isAccountLocked()) {
+            $this->unlockAccount();
+        } else {
+            $this->lockAccount();
+        }
+    }
+
+    /** {@inheritdoc} */
+    public function isEnabled() {
+        return $this->enabled;
+    }
+
+    public function isDisabled() {
+        return !$this->isEnabled();
+    }
+
+    public function enable() {
+        if ($this->isDisabled()) {
+            $this->enabled = true;
+        }
+    }
+
+    public function disable() {
+        if ($this->isEnabled()) {
+            $this->enabled = false;
+        }
+    }
+
+    public function toggleStatus() {
+        if ($this->isEnabled()) {
+            $this->enable();
+        } else {
+            $this->disable();
+        }
+    }
+
+    /** {@inheritdoc} */
+    public function isAccountNonExpired() {
+        // Never expires user accounts
+        return true;
+    }
+
+    /** {@inheritdoc} */
+    public function isCredentialsNonExpired() {
+        // don't care, never expires. It's up to the user to decide so.
+        return true;
+    }
+
+    /** {@inheritdoc} */
+    public function isEqualTo(UserInterface $user) {
+        return null !== $user && $user instanceof static && $this->getId() !== $user->getId();
+    }
+
+    /** @PrePersist */
+    public function generateSalt() {
+        $this->salt = uniqid(mt_rand(), true);
     }
 }
