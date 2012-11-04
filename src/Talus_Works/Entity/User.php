@@ -26,9 +26,9 @@ use \Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 /**
  * Topic Entity
  *
- * @Entity
- * @Table
- * @HasLifecycleCallbacks
+ * @ORM\Table
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  *
  * @DoctrineAssert\UniqueEntity("email")
  * @DoctrineAssert\UniqueEntity("username")
@@ -36,57 +36,56 @@ use \Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
  * @author Baptiste "Talus" Clavié <clavie.b@gmail.com>
  */
 class User implements AdvancedUserInterface, EquatableInterface {
-    private
-        /**
-         * @Id
-         * @Column(name = "id", type = "integer")
-         * @GeneratedValue(strategy = "AUTO")
-         */
-        $id,
+    /**
+     * @ORM\Id
+     * @ORM\Column(name = "id", type = "integer")
+     * @ORM\GeneratedValue(strategy = "AUTO")
+     */
+    private $id;
 
-        /**
-         * @Column(type = "string", unique = true)
-         *
-         * @Assert\NotNull
-         * @Assert\NotBlank
-         */
-        $username,
+    /**
+     * @ORM\Column(type = "string", unique = true)
+     *
+     * @Assert\NotNull
+     * @Assert\NotBlank
+     */
+    private $username;
 
-        /**
-         * @Column(type = "string", unique = true)
-         *
-         * @Assert\NotNull
-         * @Assert\NotBlank
-         * @Assert\Email
-         */
-        $email,
+    /**
+     * @ORM\Column(type = "string", unique = true)
+     *
+     * @Assert\NotNull
+     * @Assert\NotBlank
+     * @Assert\Email
+     */
+    private $email;
 
-        /** @Column(type = "string", length = 128) */
-        $password,
+    /** @ORM\Column(type = "string", length = 128) */
+    private $password;
 
-        /** @Column(type = "string", length = 33) */
-        $salt,
+    /** @ORM\Column(type = "string", length = 33) */
+    private $salt;
 
-        /** @Column(type = "array") */
-        $roles = array('ROLE_USER'),
+    /** @ORM\Column(type = "array") */
+    private $roles = array('ROLE_USER');
 
-        /** @Column(type = "datetime") */
-        $registeredAt,
+    /** @ORM\Column(type = "datetime") */
+    private $registeredAt;
 
-        /** @Column(type = "datetime", nullable = true) */
-        $lastConnectedAt,
+    /** @ORM\Column(type = "datetime", nullable = true) */
+    private $lastConnectedAt;
 
-        /** @Column(type = "integer") */
-        $posts = 0,
+    /** @ORM\Column(type = "integer") */
+    private $posts = 0;
 
-        /** @Column(type = "boolean") */
-        $locked = false,
+    /** @ORM\Column(type = "boolean") */
+    private $locked = false;
 
-        /** @Column(type = "boolean") */
-        $enabled = false,
+    /** @ORM\Column(type = "boolean") */
+    private $enabled = false;
 
-        /** @Column(type = "text", nullable = true) */
-        $signature;
+    /** @ORM\Column(type = "text", nullable = true) */
+    private $signature;
 
     public function __construct() {
         $this->setRegisteredAt(new \DateTime);
@@ -248,7 +247,7 @@ class User implements AdvancedUserInterface, EquatableInterface {
         return null !== $user && $user instanceof static && $this->getId() !== $user->getId();
     }
 
-    /** @PrePersist */
+    /** @ORM\PrePersist */
     public function generateSalt() {
         $this->salt = uniqid(mt_rand(), true);
     }

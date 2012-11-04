@@ -22,5 +22,10 @@ use \Doctrine\ORM\Mapping as ORM;
  * @author Baptiste "Talus" Clavié
  */
 class Forum {
-
+    /**
+     * @ORM\Id
+     * @ORM\Column(name = "id", type = "integer")
+     * @ORM\GeneratedValue(strategy = "AUTO")
+     */
+    private $id;
 }
