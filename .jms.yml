@@ -65,10 +65,6 @@ default_config:
     check_usage_context:
         enabled:                    true
         method_call_on_non_object:  true
-        pass_by_reference:          true
-        traversable:                true
-        missing_parameter:          true
-        parameter_type_checks:      lenient # Allowed Values: "disabled", "lenient", "strict"
 
     simplify_boolean_return:
         enabled: false
