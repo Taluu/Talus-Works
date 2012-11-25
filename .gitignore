@@ -6,5 +6,4 @@ cache
 *.phar
 composer.lock
 src/Talus_Works/Resources/config/sql.yml
-bin/
 

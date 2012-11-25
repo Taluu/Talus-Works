@@ -15,7 +15,9 @@ namespace Talus_Works;
 
 use \Silex\Application as BaseApplication;
 
-use \Symfony\Component\Yaml\Yaml;
+use \Symfony\Component\Yaml\Yaml,
+    \Symfony\Component\Validator\Mapping\ClassMetadataFactory,
+    \Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
 
 use \Monolog\Logger;
 
@@ -23,9 +25,12 @@ use \Silex\Provider\SecurityServiceProvider,
     \Silex\Provider\DoctrineServiceProvider,
     \Silex\Provider\MonologServiceProvider,
     \Silex\Provider\SessionServiceProvider,
+    \Silex\Provider\ValidatorServiceProvider,
     \Silex\Provider\TwigServiceProvider;
 
 use \Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
+
+use \Doctrine\Common\Annotations\AnnotationReader;
 
 use \Talus_Works\Controller\ForumController,
     \Talus_Works\Controller\DownloadController,
@@ -52,6 +57,11 @@ class Application extends BaseApplication {
 
         // register silex providers
         $app->register(new SessionServiceProvider);
+
+        $app->register(new ValidatorServiceProvider);
+        $app['validator.mapping.class_metadata_factory'] = $app->share(function ($app) {
+            return new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader));
+        });
 
         $app->register(new SecurityServiceProvider, array(
             'security.firewalls'      => [],
@@ -85,9 +95,10 @@ class Application extends BaseApplication {
         $app->register(new DoctrineORMServiceProvider, array(
             'orm.proxies_dir' => __DIR__ . '/../../cache/doctrine/proxies',
 
-            'orm.em.options'  => ['mappings' => [['type'      => 'annotation',
-                                                  'path'      => __DIR__ . '/Entity',
-                                                  'namespace' => 'Talus_Works\Entity']]]
+            'orm.em.options'  => ['mappings' => [['type'                         => 'annotation',
+                                                  'path'                         => __DIR__ . '/Entity',
+                                                  'namespace'                    => 'Talus_Works\Entity',
+                                                  'use_simple_annotation_reader' => false]]]
         ));
 
         // -- load controllers
