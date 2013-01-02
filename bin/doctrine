@@ -1,16 +1,26 @@
 #!/usr/bin/env php
 <?php
 
-$loader = require __DIR__ . '/../vendor/autoload.php';
+use \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper,
+    \Doctrine\DBAL\Tools\Console\Command as DBALCommand,
 
-\Doctrine\Common\Annotations\AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
+    \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper,
+    \Doctrine\ORM\Tools\Console\Command as ORMCommand,
 
-$app = \Talus_Works\Application::prepare();
+    \Doctrine\Common\Version;
 
-$helpers = ['db' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($app['orm.em']->getConnection()),
-            'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($app['orm.em'])];
+use \Symfony\Component\Console\Application as ConsoleApplication;
 
-$cli = new \Symfony\Component\Console\Application('Doctrine Command Line Interface', Doctrine\Common\Version::VERSION);
+use \Talus_Works\Application;
+
+require __DIR__ . '/../app/autoload.php';
+
+$app = new Application;
+
+$helpers = ['db' => new ConnectionHelper($app['orm.em']->getConnection()),
+            'em' => new EntityManagerHelper($app['orm.em'])];
+
+$cli = new ConsoleApplication('Doctrine Command Line Interface', Version::VERSION);
 $cli->setCatchExceptions(true);
 
 $helperSet = $cli->getHelperSet();
@@ -21,26 +31,19 @@ foreach ($helpers as $name => $helper) {
 
 $cli->addCommands(array(
     // DBAL Commands
-    new \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand(),
-    new \Doctrine\DBAL\Tools\Console\Command\ImportCommand(),
+    new DBALCommand\RunSqlCommand(),
+    new DBALCommand\ImportCommand(),
 
     // ORM Commands
-    new \Doctrine\ORM\Tools\Console\Command\ClearCache\MetadataCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\ClearCache\ResultCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\ClearCache\QueryCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\SchemaTool\UpdateCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\EnsureProductionSettingsCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\ConvertDoctrine1SchemaCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\GenerateRepositoriesCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\GenerateEntitiesCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\RunDqlCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\InfoCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand(),
-
+    new ORMCommand\ClearCache\MetadataCommand(),
+    new ORMCommand\ClearCache\ResultCommand(),
+    new ORMCommand\ClearCache\QueryCommand(),
+    new ORMCommand\ConvertDoctrine1SchemaCommand(),
+    new ORMCommand\GenerateRepositoriesCommand(),
+    new ORMCommand\GenerateProxiesCommand(),
+    new ORMCommand\RunDqlCommand(),
+    new ORMCommand\InfoCommand(),
+    new ORMCommand\ValidateSchemaCommand(),
 ));
 
 $cli->run();

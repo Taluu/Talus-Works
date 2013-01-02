@@ -10,6 +10,8 @@ app/logs/*
 composer.lock
 vendor
 
+app/config/parameters.yml
+
 # ide dirs
 .idea
 nbproject
