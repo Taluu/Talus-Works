@@ -18,7 +18,7 @@ use \Doctrine\ORM\Mapping as ORM;
 /**
  * Forum Entity
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Talus_Works\Entity\Repository\Forum")
  * @author Baptiste "Talus" Clavié
  */
 class Forum {

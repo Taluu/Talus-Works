@@ -27,7 +27,7 @@ use \Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
  * Topic Entity
  *
  * @ORM\Table
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Talus_Works\Entity\Repository\User")
  * @ORM\HasLifecycleCallbacks
  *
  * @DoctrineAssert\UniqueEntity("email")

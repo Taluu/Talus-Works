@@ -18,7 +18,7 @@ use \Doctrine\ORM\Mapping as ORM;
 /**
  * Post entity
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Talus_Works\Entity\Repository\Post")
  * @author Baptiste "Talus" Clavié <clavie.b@gmail.com>
  */
 class Post {
