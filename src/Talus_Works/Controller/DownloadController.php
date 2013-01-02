@@ -13,9 +13,9 @@
 
 namespace Talus_Works\Controller;
 
-use \Silex\ControllerProviderInterface,
-    \Silex\Application,
-    \Silex\ControllerCollection;
+use \Silex\Application,
+    \Silex\ControllerCollection,
+    \Silex\ControllerProviderInterface;
 
 /**
  * Handle the download of scripts

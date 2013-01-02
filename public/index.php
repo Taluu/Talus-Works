@@ -13,11 +13,7 @@
 
 use \Talus_Works\Application;
 
-use \Doctrine\Common\Annotations\AnnotationRegistry;
+require '../app/autoload.php';
 
-$loader = require '../vendor/autoload.php';
-
-AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
-
-$app = Application::prepare();
+$app = new Application;
 $app->run();

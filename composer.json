@@ -13,7 +13,7 @@
             "role": "Lead Developper"
         }
     ],
-    
+
 
     "minimum-stability": "dev",
 
@@ -39,10 +39,13 @@
 
         "mheap/Silex-Assetic": "*",
         "mheap/Silex-Gravatar": "*",
-        "mheap/Silex-Markdown": "*"
+
+        "nicl/silex-markdown": "1.0.*",
+
+        "kherge/wisdom": "1.*"
     },
 
     "autoload": {
         "psr-0": { "Talus_Works": "src/" }
-    } 
+    }
 }

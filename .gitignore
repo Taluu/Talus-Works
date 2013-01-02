@@ -1,9 +1,15 @@
-vendor
-cache
-.idea
+app/cache/*
+app/logs/*
 
-*.log
-*.phar
+!app/cache/config/.gitkeep
+!app/cache/doctrine/proxies/.gitkeep
+!app/cache/tpl/.gitkeep
+
+!app/logs/.gitkeep
+
 composer.lock
-src/Talus_Works/Resources/config/sql.yml
+vendor
 
+# ide dirs
+.idea
+nbproject
